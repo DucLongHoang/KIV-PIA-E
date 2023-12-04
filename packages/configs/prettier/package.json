@@ -1,0 +1,12 @@
+{
+	"name": "@kiv-pia-e/prettier",
+	"version": "1.0.0",
+	"main": "index.js",
+	"private": true,
+	"dependencies": {
+		"prettier-plugin-prisma": "^3.13.0"
+	},
+	"peerDependencies": {
+		"prettier": "^3.1.0"
+	}
+}

@@ -13,10 +13,10 @@ export function Router() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         
-        <AuthRoute>
+        {/* <AuthRoute> */}
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />
-        </AuthRoute>
+        {/* </AuthRoute> */}
 
     </Routes>
     </BrowserRouter>

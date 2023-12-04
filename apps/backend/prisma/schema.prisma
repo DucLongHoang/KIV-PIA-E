@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  seed     = "ts-node prisma/seeds/seed.ts"
 }
 
 datasource db {
@@ -11,7 +12,52 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id              Int          @id @default(autoincrement())
+  orionLogin      String       @unique @map("orion_login")
+  email           String
+  fullName        String       @map("full_name")
+  password        String
+  workplace       String
+  roles           UserRole[]
+  allocations     Allocation[]
+  managedProjects Project[]
+}
+
+model UserRole {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  userId Int    @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Project {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String?
+  from        DateTime
+  to          DateTime?
+  allocations Allocation[]
+  managerId   Int          @map("manager_id")
+  manager     User         @relation(fields: [managerId], references: [id])
+}
+
+model Allocation {
+  id          Int             @id @default(autoincrement())
+  projectId   Int             @map("project_id")
+  workerId    Int             @map("worker_id")
+  from        DateTime
+  to          DateTime
+  scope       Float
+  description String?
+  state       AssignmentState
+
+  project Project @relation(fields: [projectId], references: [id])
+  worker  User    @relation(fields: [workerId], references: [id])
+}
+
+enum AssignmentState {
+  DRAFT
+  CANCELLED
+  PAST
+  ACTIVE
 }

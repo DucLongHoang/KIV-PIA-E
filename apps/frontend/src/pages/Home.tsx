@@ -1,3 +1,5 @@
+import { AppLayout } from "../components/layouts/appLayout/AppLayout"
+
 export const Home = () => {
-    return <div></div>
+  return <AppLayout></AppLayout>
 }
