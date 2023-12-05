@@ -1,24 +1,32 @@
-// src/server.ts
 import Fastify from "fastify"
+import cors from "@fastify/cors"
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify"
 import { appRouter } from "./trpc/trpcRouter"
 import { createContext } from "./trpc/context"
 
 const fastify = Fastify({ logger: true })
 
-fastify.register(fastifyTRPCPlugin, {
-  prefix: "/trpc",
-  trpcOptions: { router: appRouter, createContext },
-})
+async function start() {
+  await fastify.register(cors, {
+    origin: ["http://localhost:3000"],
+  })
 
-const start = async () => {
-  try {
-    await fastify.listen(5000)
-    console.log(`Server is running on http://localhost:5000/`)
-  } catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
-  }
+  await fastify.register(fastifyTRPCPlugin, {
+    prefix: "/trpc",
+    trpcOptions: { router: appRouter, createContext },
+  } as any)
+
+  await fastify
+    .listen({ port: 5000 })
+    .then((address) => {
+      console.log(`Server is running on http://localhost:${address}/`)
+    })
+    .catch((e) => {
+      throw e
+    })
 }
 
-start()
+start().catch((err) => {
+  fastify.log.error(err)
+  process.exit(1)
+})

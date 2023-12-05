@@ -57,6 +57,26 @@ const spacings = {
   s44: "176px",
   s48: "192px",
   s50: "200px",
+  s52: "208px",
+  s53: "212px",
+  s55: "220px",
+  s56: "224px",
+  s59: "236px",
+  s60: "240px",
+  s61: "244px",
+  s64: "256px",
+  s71: "284px",
+  s72: "288px",
+  s75: "300px",
+  s80: "320px",
+  s84: "336px",
+  s86: "344px",
+  s87: "348px",
+  s90: "360px",
+  s92_5: "370px",
+  s96: "384px",
+  s98: "392px",
+  s100: "400px",
 }
 
 export const media = {
@@ -68,18 +88,199 @@ export const media = {
   xxl: 1695,
 }
 
+export const fontVariants = {
+  buttons: {
+    color: "rgb(0,81,95,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 600,
+  },
+  disabledButtons: {
+    color: "rgb(197,211,214,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 600,
+  },
+  headerH1: {
+    color: "rgb(0,81,95,1)",
+    fontSize: "24px",
+    fontFamily: "Poppins",
+    fontWeight: 600,
+  },
+  headerH2: {
+    color: "rgb(0,81,95,1)",
+    fontSize: "21px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH2Negative: {
+    color: "rgb(255,71,19,1)",
+    fontSize: "21px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH2Neutral: {
+    color: "rgb(124,167,173,1)",
+    fontSize: "21px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH2Positive: {
+    color: "rgb(62,233,171,1)",
+    fontSize: "21px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH3: {
+    color: "rgb(0,81,95,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH3Negative: {
+    color: "rgb(255,71,19,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH3Neutral: {
+    color: "rgb(124,167,173,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH3Positive: {
+    color: "rgb(62,233,171,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH3Warning: {
+    color: "rgb(255,169,19,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH4: {
+    color: "rgb(0,81,95,1)",
+    fontSize: "14px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH5: {
+    color: "rgb(0,81,95,1)",
+    fontSize: "12px",
+    fontFamily: "Poppins",
+    fontWeight: 700,
+  },
+  headerH5Negative: {
+    color: "rgb(255,71,19,1)",
+    fontSize: "12px",
+    fontFamily: "Poppins",
+    fontWeight: 600,
+  },
+  headerH5Neutral: {
+    color: "rgb(124,167,173,1)",
+    fontSize: "12px",
+    fontFamily: "Poppins",
+    fontWeight: 600,
+  },
+  headerH5Positive: {
+    color: "rgb(62,233,171,1)",
+    fontSize: "12px",
+    fontFamily: "Poppins",
+    fontWeight: 600,
+  },
+  headerH5Warning: {
+    color: "rgb(255,169,19,1)",
+    fontSize: "12px",
+    fontFamily: "Poppins",
+    fontWeight: 600,
+  },
+  inputs: {
+    color: "rgb(117,117,117,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 400,
+  },
+  labelsAlt: {
+    color: "rgb(124,167,173,1)",
+    fontSize: "12px",
+    fontFamily: "Poppins",
+    fontWeight: 400,
+  },
+  menuItem: {
+    color: "rgb(124,167,173,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 600,
+  },
+  menuItemActive: {
+    color: "rgb(62,233,171,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 600,
+  },
+  placeholders: {
+    color: "rgb(197,211,214,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 400,
+  },
+  tagDark: {
+    color: "rgb(0,81,95,1)",
+    fontSize: "12px",
+    fontFamily: "Poppins",
+    fontWeight: 400,
+  },
+  tagLight: {
+    color: "rgb(255,255,255,1)",
+    fontSize: "12px",
+    fontFamily: "Poppins",
+    fontWeight: 400,
+  },
+  textsLarge: {
+    color: "rgb(124,167,173,1)",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: 400,
+  },
+  textsSmall: {
+    color: "rgb(117,117,117,1)",
+    fontSize: "14px",
+    fontFamily: "Poppins",
+    fontWeight: 400,
+  },
+}
+
 export const stitches = createStitches({
   theme: {
     spaces: spacings,
     sizes: spacings,
     colors: {
-      white: "#FFF",
+      bg: "rgb(246,248,249,1)",
+      currentColor: "rgb(0,255,255,1)",
+      errors: "rgb(255,71,19,1)",
+      errorsHover: "rgb(209,46,0,1)",
+      errorsLight: "rgb(255,210,197,1)",
+      lines: "rgb(238,244,246,1)",
+      secondaryAlt: "rgb(150,190,61,1)",
+      secondaryLight: "rgb(205,255,237,1)",
+      secondaryTexts: "rgb(62,233,171,1)",
+      texts: "rgb(117,117,117,1)",
+      textsAlt: "rgb(124,167,173,1)",
+      textsDisabled: "rgb(197,211,214,1)",
+      warning: "rgb(255,169,19,1)",
+      warningHover: "rgb(224,143,3,1)",
+      warningLight: "rgb(255,234,197,1)",
+      white: "rgb(255,255,255,1)",
       gray: "#EEE",
       primary: "#007bff",
       secondary: "#6c757d",
       background: "#F6F8F9",
       good: "#affc5d",
       bad: "#ffa913",
+      transparent: "transparent",
     },
     fonts: {
       default: "Poppins",
@@ -118,10 +319,14 @@ export const stitches = createStitches({
   },
 })
 
-export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme } = stitches
+export const { styled, css, globalCss, keyframes, config, getCssText, theme, createTheme } = stitches
 
 export const globalStyles = globalCss({
   // Global styles (optional)
   "body, html": { padding: 0, margin: 0 },
   // ... more global styles
 })
+
+export type CSSProp = Stitches.CSS<typeof config>
+export type ColorType = keyof typeof theme.colors
+export type MediaSizeType = keyof typeof media

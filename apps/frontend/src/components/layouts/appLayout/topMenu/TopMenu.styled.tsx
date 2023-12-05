@@ -9,11 +9,11 @@ export const SContainer = styled(Toolbar.Root, {
   justifyContent: "space-between",
   height: theme.spaces.s14,
 
-  paddingRight: theme.spaces.s4,
+  // paddingRight: theme.spaces.s4,
 
   "@lg": {
     paddingLeft: theme.spaces.s6,
-    paddingRight: theme.spaces.s0,
+    paddingRight: theme.spaces.s6,
     height: theme.spaces.s17,
   },
 })
