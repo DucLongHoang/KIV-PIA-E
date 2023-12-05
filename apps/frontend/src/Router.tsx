@@ -4,7 +4,7 @@ import { Home } from "./pages/Home"
 import { Login } from "./pages/auth/Login"
 import { Register } from "./pages/auth/Register"
 import { AuthRoute } from "./components/AuthRoute"
-import { Projects } from "./pages/projects/Projects"
+import { Project } from "./pages/project/Project"
 import { LINKS } from "./constants/Links"
 
 export function Router() {
@@ -16,7 +16,7 @@ export function Router() {
 
         {/* <AuthRoute> */}
         <Route path={LINKS.home} element={<Home />} />
-        <Route path={LINKS.project(":projectId")} element={<Projects />} />
+        <Route path={LINKS.project(":projectId")} element={<Project />} />
         {/* </AuthRoute> */}
       </Routes>
     </BrowserRouter>

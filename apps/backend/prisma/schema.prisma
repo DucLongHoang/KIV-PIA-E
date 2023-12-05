@@ -49,13 +49,13 @@ model Allocation {
   to          DateTime
   scope       Float
   description String?
-  state       AssignmentState
+  state       AllocationState
 
   project Project @relation(fields: [projectId], references: [id])
   worker  User    @relation(fields: [workerId], references: [id])
 }
 
-enum AssignmentState {
+enum AllocationState {
   DRAFT
   CANCELLED
   PAST

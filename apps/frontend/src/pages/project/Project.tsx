@@ -7,6 +7,10 @@ import { Flex } from "../../components/Flex"
 import * as DropDown from "@radix-ui/react-dropdown-menu"
 import { PropsWithChildren } from "react"
 import { SContent, STrigger } from "../../components/dropdown/Dropdown.styled"
+import { trpc } from "../../utils/trpc"
+import RectPlaceholder from "../../components/placeholder/RectPlaceHolder"
+import { serialize } from "v8"
+import { useSafeNumberParam } from "../../hooks/params"
 
 interface CardProps {
   variant?: "header" | "description" | "allocation"
@@ -45,7 +49,7 @@ const SCard = styled("div", {
         paddingRight: theme.spaces.s10,
       },
       description: {
-        height: theme.sizes.s10,
+        height: theme.sizes.s20,
       },
       allocation: {
         height: theme.sizes.s50,
@@ -66,44 +70,73 @@ export const Card = (props: PropsWithChildren<CardProps>) => {
   return <SCard type={variant}>{children}</SCard>
 }
 
-export const Projects = () => {
-  const project = {
-    id: 1,
-    name: "Project Titan",
-    description: "A top-secret project to develop new technology.",
-    from: new Date("2023-01-01T00:00:00.000Z"),
-    to: new Date("2023-12-31T23:59:59.000Z"),
-    managerId: 1,
+export const Project = () => {
+  const projectId = useSafeNumberParam("projectId")
+  const projectQuery = trpc.projects.getById.useQuery({ projectId })
+  const allocationsQuery = trpc.allocations.getByProjectId.useQuery({ projectId })
+
+  const { data: projectData, isLoading: projectLoading } = projectQuery
+  const { data: allocationData, isLoading: allocationIsLoading } = allocationsQuery
+
+  if (!projectData || "" || projectLoading || !allocationData || allocationIsLoading) {
+    return (
+      <>
+        <Spacer size={theme.spaces.s5} />
+        <RectPlaceholder />
+      </>
+    )
   }
+
+  const { id, name, description, from, to, managerId } = projectData
+  const project = { id, name, description, from: new Date(from), to: !to ? null : new Date(to), managerId }
+
+  const allocations = allocationData.map((allocation) => {
+    const { id, projectId, workerId, scope, from, to, description } = allocation
+    return { id, projectId, workerId, scope, from: new Date(from), to: !to ? null : new Date(to), description }
+  })
+
+  const workers = allocations.map((allocation) => {
+    const worker = trpc.users.getById.useQuery({ id: allocation.workerId })
+    return worker.data
+  })
 
   return (
     <AppLayout>
       <Spacer size={theme.spaces.s6} />
 
-      <Project
-        id={project.id}
-        name={project.name}
-        description={project.description}
-        from={project.from}
-        to={project.to}
-        managerId={project.managerId}
-      />
+      <ProjectContent project={project} allocations={allocations} />
       <SAllocationCard />
     </AppLayout>
   )
 }
 
-interface ProjectProps {
+type ProjectType = {
   id: number
   name: string
-  description: string
+  description?: string | null
   from: Date
-  to: Date | null
+  to?: Date | null
   managerId: number
 }
 
-const Project = (props: ProjectProps) => {
-  const { id, name, description, from, to, managerId } = props
+type AllocationType = {
+  id: number
+  projectId: number
+  workerId: number
+  scope: number
+  from: Date
+  to?: Date | null
+  description?: string | null
+}
+
+interface ProjectProps {
+  project: ProjectType
+  allocations: AllocationType[]
+}
+
+const ProjectContent = (props: ProjectProps) => {
+  const { id, name, description, from, to, managerId } = props.project
+  const allocations = props.allocations
 
   return (
     <SWrapper>
@@ -127,14 +160,16 @@ const Project = (props: ProjectProps) => {
 
       <Text type="headerH3">Description</Text>
       <Card variant="description">
-        <Text type="headerH3">{description}</Text>
+        <Text type="textsLarge">{description}</Text>
       </Card>
 
       <Spacer size={theme.spaces.s10} />
 
       <Text type="headerH3">Allocations</Text>
       <Card variant="allocation">
-        <SAllocationCard></SAllocationCard>
+        {allocations.map((allocation) => {
+          return <SAllocationCard>{allocation.workerId}</SAllocationCard>
+        })}
       </Card>
     </SWrapper>
   )

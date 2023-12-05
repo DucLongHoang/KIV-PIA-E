@@ -42,7 +42,13 @@ const HomeContent = () => {
   const { data, isLoading, error } = projectsQuery
 
   if (!data || isLoading || error) {
-    return <HomePlaceholder />
+    return (
+      <>
+        <Text type="headerH1">Projects</Text>
+        <Spacer size={theme.spaces.s5} />
+        <HomePlaceholder />
+      </>
+    )
   }
 
   const projects = data
