@@ -1,76 +1,14 @@
-import { styled } from "@stitches/react"
 import { Spacer } from "../../components/Spacer"
 import Text from "../../components/Text"
 import { AppLayout } from "../../components/layouts/appLayout/AppLayout"
 import { theme } from "../../styles/stitches.config"
 import { Flex } from "../../components/Flex"
 import * as DropDown from "@radix-ui/react-dropdown-menu"
-import { PropsWithChildren } from "react"
 import { SContent, STrigger } from "../../components/dropdown/Dropdown.styled"
 import { trpc } from "../../utils/trpc"
 import RectPlaceholder from "../../components/placeholder/RectPlaceHolder"
 import { useSafeNumberParam } from "../../hooks/params"
-
-interface CardProps {
-  variant?: "header" | "description" | "allocation"
-}
-
-const SWrapper = styled("div", {
-  display: "flex",
-  flexDirection: "column",
-  width: "100%",
-  height: "100%",
-})
-
-const SCard = styled("div", {
-  display: "flex",
-  flexDirection: "column",
-  boxShadow: theme.shadows.default,
-  padding: theme.spaces.s10,
-
-  variants: {
-    isActive: {
-      true: {
-        backgroundColor: theme.colors.white,
-      },
-      false: {
-        backgroundColor: theme.colors.gray,
-      },
-    },
-    type: {
-      header: {
-        height: theme.sizes.s10,
-        backgroundColor: theme.colors.transparent,
-        boxShadow: "none",
-        paddingTop: theme.spaces.s0,
-        paddingBottom: theme.spaces.s0,
-        paddingLeft: theme.spaces.s10,
-        paddingRight: theme.spaces.s10,
-      },
-      description: {
-        height: theme.sizes.s40,
-      },
-      allocation: {
-        height: theme.sizes.s50,
-      },
-    },
-  },
-
-  defaultVariants: {
-    isActive: "true",
-  },
-})
-
-const SAllocationCard = styled("div", {
-  display: "flex",
-  direction: "row",
-})
-
-export const Card = (props: PropsWithChildren<CardProps>) => {
-  const { variant, children } = props
-
-  return <SCard type={variant}>{children}</SCard>
-}
+import { Card, SAllocationCard, SWrapper } from "./Project.styled"
 
 export const Project = () => {
   const projectId = useSafeNumberParam("projectId")
@@ -101,8 +39,8 @@ export const Project = () => {
       projectId,
       workerId,
       scope,
-      from: new Date(from),
-      to: !to ? null : new Date(to),
+      from,
+      to,
       description,
     } as AllocationType
   })
