@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2016", // or a higher target like es2015, es2017, etc., depending on your environment
+    "module": "commonjs", // or es2020, esnext, etc.
+    "declaration": true, // if you want to generate .d.ts files
+    "outDir": "./dist", // or another directory where you want to output the compiled JS files
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

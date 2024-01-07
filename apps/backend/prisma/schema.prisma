@@ -14,31 +14,49 @@ datasource db {
 model User {
   id              Int          @id @default(autoincrement())
   orionLogin      String       @unique @map("orion_login")
+  role            UserRole
   email           String
   fullName        String       @map("full_name")
   password        String
-  workplace       String
-  roles           UserRole[]
+  departmentId    Int?         @map("department_id")
+  department      Department?  @relation(fields: [departmentId], references: [id])
   allocations     Allocation[]
   managedProjects Project[]
+
+  superiorId   Int?
+  superior     User?  @relation("SuperiorSubordinate", fields: [superiorId], references: [id])
+  subordinates User[] @relation("SuperiorSubordinate")
+
+  managedDepartment Department? @relation("DepartmentManager")
 }
 
-model UserRole {
-  id     Int    @id @default(autoincrement())
-  name   String @unique
-  userId Int    @map("user_id")
-  user   User   @relation(fields: [userId], references: [id])
+enum UserRole {
+  SUBORDINATE
+  SUPERIOR
+  SECRETARIAT
 }
 
 model Project {
-  id          Int          @id @default(autoincrement())
-  name        String
-  description String?
-  from        DateTime
-  to          DateTime?
-  allocations Allocation[]
-  managerId   Int          @map("manager_id")
-  manager     User         @relation(fields: [managerId], references: [id])
+  id           Int          @id @default(autoincrement())
+  name         String
+  description  String?
+  from         DateTime
+  to           DateTime?
+  allocations  Allocation[]
+  managerId    Int          @map("manager_id")
+  departmentId Int          @map("department_id")
+
+  manager    User       @relation(fields: [managerId], references: [id])
+  department Department @relation(fields: [departmentId], references: [id])
+}
+
+model Department {
+  id                Int       @id @default(autoincrement())
+  name              String
+  managerId         Int?      @unique @map("manager_id")
+  manager           User?     @relation("DepartmentManager", fields: [managerId], references: [id])
+  projects          Project[]
+  departmentWorkers User[]
 }
 
 model Allocation {

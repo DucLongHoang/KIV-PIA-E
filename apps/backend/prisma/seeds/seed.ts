@@ -1,12 +1,41 @@
 import { PrismaClient } from "@prisma/client"
-import { getUsers } from "./data/users"
+import { getUsers, updateUsersWithDepartmentId } from "./data/users"
 import { getAllocations } from "./data/allocations"
 import { getProjects } from "./data/projects"
+import { getDepartments, updateDepartmentWithManagerId } from "./data/departments"
 
 async function seedDb(prisma: PrismaClient) {
+  for (const department of getDepartments()) {
+    await prisma.department.create({
+      data: department,
+    })
+  }
+
   for (const user of getUsers()) {
     await prisma.user.create({
       data: user,
+    })
+  }
+
+  for (const departmentUpdate of updateDepartmentWithManagerId()) {
+    await prisma.department.update({
+      where: {
+        id: departmentUpdate.id,
+      },
+      data: {
+        managerId: departmentUpdate.managerId,
+      },
+    })
+  }
+
+  for (const userUpdate of updateUsersWithDepartmentId()) {
+    await prisma.user.update({
+      where: {
+        id: userUpdate.id,
+      },
+      data: {
+        departmentId: userUpdate.departmentId,
+      },
     })
   }
 

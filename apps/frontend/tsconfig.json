@@ -14,7 +14,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "typeRoots": ["./node_modules/@types", "../shared/dist/types"]
+    // "baseUrl": "..",
+    // "paths": {
+    // "shared": ["shared/dist"]
+    // }
   },
-  "include": ["src"]
+  "include": ["src/**/*"]
 }

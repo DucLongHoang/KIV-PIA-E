@@ -1,17 +1,27 @@
 import { Prisma } from "@prisma/client"
 import { WithId } from "../utils"
 
-type User = WithId<Prisma.UserUncheckedCreateInput>
+type User = WithId<Prisma.UserUncheckedCreateWithoutDepartmentInput>
 
 export function getUsers(): User[] {
   return [
+    {
+      id: 0,
+      orionLogin: "tcook",
+      email: "tim.cook@example.com",
+      fullName: "Tim Cook",
+      password: "123456",
+      role: "SECRETARIAT",
+      // departmentId: 0,
+    },
     {
       id: 1,
       orionLogin: "duclong",
       email: "duclonghoang.dlh@gmail.com",
       fullName: "Duc Long hoang",
       password: "123456",
-      workplace: "KIV",
+      role: "SUPERIOR",
+      // departmentId: 1,
     },
     {
       id: 2,
@@ -19,7 +29,8 @@ export function getUsers(): User[] {
       email: "johny@gmail.com",
       fullName: "Johny Cage",
       password: "123456",
-      workplace: "KMA",
+      role: "SUPERIOR",
+      // departmentId: 2,
     },
     {
       id: 3,
@@ -27,7 +38,8 @@ export function getUsers(): User[] {
       email: "kathy@gmail.com",
       fullName: "Katherine Elizabeth",
       password: "123456",
-      workplace: "KFY",
+      role: "SUPERIOR",
+      // departmentId: 3,
     },
     {
       id: 4,
@@ -35,7 +47,8 @@ export function getUsers(): User[] {
       email: "sarah.connor@example.com",
       fullName: "Sarah Connor",
       password: "123456",
-      workplace: "KIV",
+      role: "SUBORDINATE",
+      // departmentId: 1,
     },
     {
       id: 5,
@@ -43,7 +56,8 @@ export function getUsers(): User[] {
       email: "mark.zuckerberg@example.com",
       fullName: "Mark Zuckerberg",
       password: "123456",
-      workplace: "KMA",
+      role: "SUBORDINATE",
+      // departmentId: 1,
     },
     {
       id: 6,
@@ -51,7 +65,8 @@ export function getUsers(): User[] {
       email: "elon.musk@example.com",
       fullName: "Elon Musk",
       password: "123456",
-      workplace: "KFY",
+      role: "SUBORDINATE",
+      // departmentId: 2,
     },
     {
       id: 7,
@@ -59,7 +74,8 @@ export function getUsers(): User[] {
       email: "jane.doe@example.com",
       fullName: "Jane Doe",
       password: "123456",
-      workplace: "KKY",
+      role: "SUBORDINATE",
+      // departmentId: 2,
     },
     {
       id: 8,
@@ -67,7 +83,8 @@ export function getUsers(): User[] {
       email: "daniel.smith@example.com",
       fullName: "Daniel Smith",
       password: "123456",
-      workplace: "KIV",
+      role: "SUBORDINATE",
+      // departmentId: 3,
     },
     {
       id: 9,
@@ -75,15 +92,55 @@ export function getUsers(): User[] {
       email: "emma.watson@example.com",
       fullName: "Emma Watson",
       password: "123456",
-      workplace: "KMA",
+      role: "SUBORDINATE",
+      // departmentId: 3,
+    },
+  ]
+}
+
+type UserUpdate = WithId<Prisma.UserUncheckedUpdateInput>
+
+export function updateUsersWithDepartmentId(): UserUpdate[] {
+  return [
+    {
+      id: 0,
+      departmentId: 0,
     },
     {
-      id: 10,
-      orionLogin: "tcook",
-      email: "tim.cook@example.com",
-      fullName: "Tim Cook",
-      password: "123456",
-      workplace: "KFY",
+      id: 1,
+      departmentId: 1,
+    },
+    {
+      id: 2,
+      departmentId: 2,
+    },
+    {
+      id: 3,
+      departmentId: 3,
+    },
+    {
+      id: 4,
+      departmentId: 1,
+    },
+    {
+      id: 5,
+      departmentId: 1,
+    },
+    {
+      id: 6,
+      departmentId: 2,
+    },
+    {
+      id: 7,
+      departmentId: 2,
+    },
+    {
+      id: 8,
+      departmentId: 3,
+    },
+    {
+      id: 9,
+      departmentId: 3,
     },
   ]
 }

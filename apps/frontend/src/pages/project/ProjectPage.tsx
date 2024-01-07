@@ -8,9 +8,10 @@ import { SContent, STrigger } from "../../components/dropdown/Dropdown.styled"
 import { trpc } from "../../utils/trpc"
 import RectPlaceholder from "../../components/placeholder/RectPlaceHolder"
 import { useSafeNumberParam } from "../../hooks/params"
-import { Card, SAllocationCard, SWrapper } from "./Project.styled"
+import { Card, SAllocationCard, SWrapper } from "./ProjectPage.styled"
+import { Project, User, Allocation, projectSchema } from "shared"
 
-export const Project = () => {
+export const ProjectPage = () => {
   const projectId = useSafeNumberParam("projectId")
   const projectQuery = trpc.projects.getById.useQuery({ projectId })
   const allocationsQuery = trpc.allocations.getByProjectId.useQuery({ projectId })
@@ -29,69 +30,25 @@ export const Project = () => {
     )
   }
 
-  const { id, name, description, from, to, managerId } = projectData
-  const project = { id, name, description, from: new Date(from), to: !to ? null : new Date(to), managerId }
-
-  const allocations = allocationData.map((allocation) => {
-    const { id, projectId, workerId, scope, from, to, description } = allocation
-    return {
-      id,
-      projectId,
-      workerId,
-      scope,
-      from,
-      to,
-      description,
-    } as AllocationType
-  })
-
-  const workers = workersData as UserType[]
+  const workers = workersData as User[]
   const filteredWorkers = workers.filter((worker) =>
-    allocations.some((allocation) => allocation.workerId === worker.id)
+    allocationData.some((allocation) => allocation.workerId === worker.id)
   )
 
   return (
     <AppLayout>
       <Spacer size={theme.spaces.s6} />
 
-      <ProjectContent project={project} allocations={allocations} workers={filteredWorkers} />
+      <ProjectContent project={projectData} allocations={allocationData} workers={filteredWorkers} />
       <SAllocationCard />
     </AppLayout>
   )
 }
 
-type UserType = {
-  id: number
-  orionLogin: string
-  email: string
-  fullName: string
-  password: string
-  workplace: string
-}
-
-type ProjectType = {
-  id: number
-  name: string
-  description?: string | null
-  from: Date
-  to?: Date | null
-  managerId: number
-}
-
-type AllocationType = {
-  id: number
-  projectId: number
-  workerId: number
-  scope: number
-  from: Date
-  to?: Date | null
-  description?: string | null
-}
-
 interface ProjectProps {
-  project: ProjectType
-  allocations: AllocationType[]
-  workers: UserType[]
+  project: Project
+  allocations: Allocation[]
+  workers: User[]
 }
 
 const ProjectContent = (props: ProjectProps) => {

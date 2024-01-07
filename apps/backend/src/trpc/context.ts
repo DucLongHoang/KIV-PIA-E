@@ -10,3 +10,8 @@ export async function createContext({ req, res }: CreateFastifyContextOptions) {
 }
 
 export type Context = inferAsyncReturnType<typeof createContext>
+
+async function getUserFromRequest({ req }: CreateFastifyContextOptions) {
+  // Your logic here
+  return { id: "userId", role: "userRole" } // Example return value
+}

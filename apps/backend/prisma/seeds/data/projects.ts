@@ -13,6 +13,7 @@ export function getProjects(): Project[] {
       from: new Date("2023-01-01T00:00:00Z"),
       to: new Date("2023-12-31T23:59:59Z"),
       managerId: 1,
+      departmentId: 1,
     },
     {
       id: 2,
@@ -21,6 +22,7 @@ export function getProjects(): Project[] {
         "Project Atlas is set to be a landmark achievement in geospatial technology. It aims to create the most detailed and dynamic world map available, leveraging the latest in satellite imaging and data analytics. The project aspires to provide real-time insights into environmental changes, urban development, and global weather patterns.Through this endeavor, the team is committed to contributing to efforts in climate change research and urban planning. The project also seeks to foster a deeper understanding of our planet and its diverse ecosystems.",
       from: new Date("2023-02-01T00:00:00Z"),
       managerId: 2,
+      departmentId: 1,
     },
     {
       id: 3,
@@ -30,6 +32,7 @@ export function getProjects(): Project[] {
       from: new Date("2022-03-15T00:00:00Z"),
       to: new Date("2022-11-20T23:59:59Z"),
       managerId: 1,
+      departmentId: 2,
     },
     {
       id: 4,
@@ -39,6 +42,7 @@ export function getProjects(): Project[] {
       from: new Date("2021-05-01T00:00:00Z"),
       to: new Date("2021-10-31T23:59:59Z"),
       managerId: 2,
+      departmentId: 2,
     },
     {
       id: 5,
@@ -48,6 +52,7 @@ export function getProjects(): Project[] {
       from: new Date("2023-04-01T00:00:00Z"),
       to: new Date("2023-09-30T23:59:59Z"),
       managerId: 1,
+      departmentId: 3,
     },
     {
       id: 6,
@@ -56,6 +61,7 @@ export function getProjects(): Project[] {
         "Project Echo is an advanced telecommunications initiative aiming to enhance global connectivity through a new generation of communication satellites. These satellites are designed to provide high-speed internet access in remote and underserved areas around the world. The project is a step towards bridging the digital divide and empowering communities with digital literacy and access.Collaborating with international space agencies and telecommunication experts, the project team is committed to ensuring that the deployment of these satellites is carried out with minimal environmental impact. Project Echo represents a milestone in connecting the world like never before.",
       from: new Date("2023-06-01T00:00:00Z"),
       managerId: 2,
+      departmentId: 3,
     },
     {
       id: 7,
@@ -65,6 +71,7 @@ export function getProjects(): Project[] {
       from: new Date("2024-01-15T00:00:00Z"),
       to: new Date("2024-12-15T23:59:59Z"),
       managerId: 1,
+      departmentId: 3,
     },
   ]
 }

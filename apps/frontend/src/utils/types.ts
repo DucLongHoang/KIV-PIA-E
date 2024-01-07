@@ -25,3 +25,4 @@ export type ButtonProps = Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButton
 //   isLoading: boolean
 //   data?: InferQueryOutput<TRouteKey>
 // }
+

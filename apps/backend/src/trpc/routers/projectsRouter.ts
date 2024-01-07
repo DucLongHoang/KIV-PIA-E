@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { publicProcedure, router } from "../createRouter"
+import { projectSchema } from "shared"
 
 export const projectsRouter = router({
   getAll: publicProcedure.query(async ({ ctx }) => {
@@ -7,18 +8,7 @@ export const projectsRouter = router({
   }),
   getById: publicProcedure
     .input(z.object({ projectId: z.number() }))
-    .output(
-      z
-        .object({
-          id: z.number(),
-          name: z.string(),
-          description: z.string().nullable(),
-          from: z.date(),
-          to: z.date().nullable(),
-          managerId: z.number(),
-        })
-        .nullable()
-    )
+    .output(projectSchema.nullable())
     .query(async ({ ctx, input }) => {
       const result = await ctx.prisma.project.findUnique({ where: { id: input.projectId } })
       return result
