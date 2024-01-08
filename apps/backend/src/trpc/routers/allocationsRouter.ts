@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { publicProcedure, router } from "../createRouter"
-import { allocationSchema, AllocationState } from "shared"
+import { allocationSchema, AllocationState } from "../../../../shared"
 
 export const allocationsRouter = router({
   getAll: publicProcedure.query(async ({ ctx }) => {
