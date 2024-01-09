@@ -3,13 +3,12 @@ import Text from "../../components/Text"
 import { AppLayout } from "../../components/layouts/appLayout/AppLayout"
 import { theme } from "../../styles/stitches.config"
 import { Flex } from "../../components/Flex"
-import * as DropDown from "@radix-ui/react-dropdown-menu"
-import { SContent, STrigger } from "../../components/dropdown/Dropdown.styled"
 import { trpc } from "../../utils/trpc"
 import RectPlaceholder from "../../components/placeholder/RectPlaceHolder"
 import { useSafeNumberParam } from "../../hooks/params"
 import { Card, SAllocationCard, SWrapper } from "./ProjectPage.styled"
 import { Project, User, Allocation, projectSchema } from "shared"
+import { Dropdown } from "../../components/dropdown/Dropdown"
 
 export const ProjectPage = () => {
   const projectId = useSafeNumberParam("projectId")
@@ -65,12 +64,8 @@ const ProjectContent = (props: ProjectProps) => {
             <Spacer size={theme.spaces.s1} />
             <Text type="headerH3">(id: {id})</Text>
           </Flex>
-          <DropDown.Root>
-            <STrigger>
-              <Text type="textsSmall">{name}</Text>
-            </STrigger>
-            <SContent>Content</SContent>
-          </DropDown.Root>
+
+          <Dropdown selectedOption={name} options={["Project 1", "Project 2"]} />
         </Flex>
       </Card>
 

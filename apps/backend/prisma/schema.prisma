@@ -15,7 +15,7 @@ model User {
   id              Int          @id @default(autoincrement())
   orionLogin      String       @unique @map("orion_login")
   role            UserRole
-  email           String
+  email           String       @unique
   fullName        String       @map("full_name")
   password        String
   departmentId    Int?         @map("department_id")
@@ -38,7 +38,7 @@ enum UserRole {
 
 model Project {
   id           Int          @id @default(autoincrement())
-  name         String
+  name         String       @unique
   description  String?
   from         DateTime
   to           DateTime?
@@ -52,7 +52,7 @@ model Project {
 
 model Department {
   id                Int       @id @default(autoincrement())
-  name              String
+  name              String    @unique
   managerId         Int?      @unique @map("manager_id")
   manager           User?     @relation("DepartmentManager", fields: [managerId], references: [id])
   projects          Project[]

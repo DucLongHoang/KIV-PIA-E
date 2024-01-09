@@ -5,9 +5,9 @@ export const STrigger = styled(Dropdown.Trigger, {
   border: "unset",
   outline: "unset",
   backgroundColor: theme.colors.white,
+  boxShadow: theme.shadows.default,
 
-  marginLeft: theme.spaces.s21,
-  minWidth: theme.spaces.s90,
+  minWidth: theme.spaces.s80,
   paddingInline: theme.spaces.s6,
   paddingTop: theme.spaces.s4,
   paddingBottom: theme.spaces.s4,
@@ -26,7 +26,19 @@ export const STrigger = styled(Dropdown.Trigger, {
 })
 
 export const SContent = styled(Dropdown.Content, {
-  minWidth: theme.spaces.s90,
+  minWidth: theme.spaces.s80,
   backgroundColor: theme.colors.white,
   boxShadow: theme.shadows.default,
+})
+
+export const SDropdownItem = styled(Dropdown.Item, {
+  display: "flex",
+  borderStyle: "solid",
+  borderWidth: theme.sizes.spx,
+  borderColor: theme.colors.transparent,
+
+  "&:hover": {
+    cursor: "pointer",
+    borderColor: theme.colors.bad,
+  },
 })

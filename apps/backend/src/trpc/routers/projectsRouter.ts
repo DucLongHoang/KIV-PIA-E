@@ -13,4 +13,12 @@ export const projectsRouter = router({
       const result = await ctx.prisma.project.findUnique({ where: { id: input.projectId } })
       return result
     }),
+  create: publicProcedure
+    .input(projectSchema)
+    .output(z.void())
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.project.create({
+        data: input,
+      })
+    }),
 })

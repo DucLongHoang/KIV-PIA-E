@@ -5,7 +5,7 @@ type LinkId = Maybe<string | number>
 export const LINKS = {
   home: "/",
   login: "/login",
-  register: "/register",
+  create: "/create",
   projects: "/projects",
 
   project: (projectId: LinkId) => `/projects/${projectId}`,

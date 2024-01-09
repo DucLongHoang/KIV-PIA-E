@@ -26,6 +26,8 @@
     "axios": "^1.6.2",
     "dotenv": "^16.3.1",
     "fastify": "^4.24.3",
+    "@fastify/cookie": "^7.3.1",
+    "@fastify/jwt": "^6.3.2",
     "fastify-plugin": "^4.5.1",
     "lodash": "^4.17.21",
     "shared": "*",
