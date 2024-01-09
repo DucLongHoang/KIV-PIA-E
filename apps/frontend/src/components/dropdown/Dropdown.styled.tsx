@@ -29,6 +29,7 @@ export const SContent = styled(Dropdown.Content, {
   minWidth: theme.spaces.s80,
   backgroundColor: theme.colors.white,
   boxShadow: theme.shadows.default,
+  zIndex: 1,
 })
 
 export const SDropdownItem = styled(Dropdown.Item, {

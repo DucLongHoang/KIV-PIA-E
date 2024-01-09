@@ -1,7 +1,17 @@
 import { z } from "zod"
 import { publicProcedure, router } from "../createRouter"
-import { userSchema } from "../../../../shared"
+import { UserRole } from "../../../../shared"
 import { Prisma } from "@prisma/client"
+
+export const createUserInput = z.object({
+  orionLogin: z.string(),
+  email: z.string().email(),
+  fullName: z.string(),
+  password: z.string(),
+  role: z.nativeEnum(UserRole),
+  departmentId: z.number(),
+  superiorId: z.number().optional(),
+})
 
 export const usersRouter = router({
   getAll: publicProcedure.query(async ({ ctx }) => {
@@ -13,7 +23,7 @@ export const usersRouter = router({
     })
   }),
   create: publicProcedure
-    .input(userSchema)
+    .input(createUserInput)
     .output(z.void())
     .mutation(async ({ ctx, input }) => {
       const userFromDb = await ctx.prisma.user.findUnique({
@@ -24,18 +34,8 @@ export const usersRouter = router({
         throw new Error("User with this email already exists")
       }
 
-      const userData: Prisma.UserUncheckedCreateInput = {
-        orionLogin: input.orionLogin,
-        email: input.email,
-        fullName: input.fullName,
-        password: input.password,
-        role: input.role,
-        departmentId: input.departmentId,
-        superiorId: input.superiorId,
-      }
-
       await ctx.prisma.user.create({
-        data: userData,
+        data: input,
       })
     }),
 })
