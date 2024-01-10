@@ -79,7 +79,7 @@ const HomeContent = () => {
 
 export const Home = () => {
   return (
-    <AppLayout>
+    <AppLayout showTopMenu>
       <Spacer size={theme.spaces.s5} />
       <HomeContent />
     </AppLayout>

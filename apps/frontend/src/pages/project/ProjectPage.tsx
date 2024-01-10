@@ -35,7 +35,7 @@ export const ProjectPage = () => {
   )
 
   return (
-    <AppLayout>
+    <AppLayout showTopMenu showProjectDropdown>
       <Spacer size={theme.spaces.s6} />
 
       <ProjectContent project={projectData} allocations={allocationData} workers={filteredWorkers} />
@@ -64,8 +64,6 @@ const ProjectContent = (props: ProjectProps) => {
             <Spacer size={theme.spaces.s1} />
             <Text type="headerH3">(id: {id})</Text>
           </Flex>
-
-          <Dropdown selectedOption={name} options={["Project 1", "Project 2"]} />
         </Flex>
       </Card>
 

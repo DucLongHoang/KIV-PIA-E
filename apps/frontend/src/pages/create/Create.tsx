@@ -36,7 +36,7 @@ export const Create = () => {
   const users = usersData as User[]
 
   return (
-    <AppLayout>
+    <AppLayout showTopMenu>
       <Spacer size={theme.spaces.s40} />
       <Flex justify={"center"} align={"center"} direction={"column"}>
         <Button

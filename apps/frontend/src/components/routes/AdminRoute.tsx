@@ -10,14 +10,14 @@ export const AdminRoute = ({ children }: PropsWithChildren) => {
   const myselfQuery = trpc.users.myself.useQuery()
   const navigate = useNavigate()
 
-  const { data: user, isLoading, isError } = myselfQuery
+  const { data: userData, isLoading, isError } = myselfQuery
 
   useEffect(() => {
-    if (isError || !user || user.userRole !== UserRole.SECRETARIAT) {
+    if (isError || !userData || userData.userRole !== UserRole.SECRETARIAT) {
       toasts.error("Redirecting to home page")
       navigate(LINKS.home)
     }
-  }, [isError, navigate, user])
+  }, [isError, navigate, userData])
 
   if (isLoading) {
     return <Loading />
