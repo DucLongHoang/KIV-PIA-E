@@ -4,7 +4,6 @@ import Text from "../../../Text"
 import { Link, useNavigate } from "react-router-dom"
 import { LINKS } from "../../../../constants/Links"
 import { UserRole } from "shared"
-import { Logout } from "../../../../styles/images"
 import { trpc } from "../../../../utils/trpc"
 import { Button } from "../../../button/Button"
 import { theme } from "../../../../styles/stitches.config"
@@ -15,11 +14,14 @@ interface Props {
   userLogin: string
   userName: string
   userRole: UserRole
+  showCreateLink?: boolean
 }
 
-function TopMenu({ userLogin, userName, userRole }: Props) {
+function TopMenu({ userLogin, userName, userRole, showCreateLink }: Props) {
   const logoutMutation = trpc.auth.logout.useMutation()
   const navigate = useNavigate()
+
+  const isAdmin = userRole === UserRole.SECRETARIAT
 
   const handleLogout = async () => {
     await logoutMutation.mutateAsync()
@@ -37,6 +39,14 @@ function TopMenu({ userLogin, userName, userRole }: Props) {
         </Flex>
 
         <Flex direction="row" align="center">
+          {isAdmin && showCreateLink && (
+            <>
+              <Link to={LINKS.create}>
+                <Text type="textsSmall">Create</Text>
+              </Link>
+              <Spacer size={theme.spaces.s4} />
+            </>
+          )}
           <Flex direction="column" align="end">
             <Text type="textsLarge">{userName}</Text>
             <Text type="textsSmall">{userLogin}</Text>

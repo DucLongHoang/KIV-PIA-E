@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { protectedProcedure, publicProcedure, router } from "../createRouter"
+import { protectedProcedure, router } from "../createRouter"
 import { allocationSchema, AllocationState } from "../../../../shared"
 
 export const allocationsRouter = router({

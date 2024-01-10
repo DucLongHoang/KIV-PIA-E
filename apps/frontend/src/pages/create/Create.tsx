@@ -11,7 +11,11 @@ import { Department, Project, User } from "shared"
 import { CreateUser } from "./CreateUser"
 import { CreateProject } from "./CreateProject"
 
-export const Create = () => {
+interface CreateProps {
+  type?: "user" | "project"
+}
+
+export const Create = ({ type }: CreateProps) => {
   const departmentsQuery = trpc.departments.getAll.useQuery()
   const projectsQuery = trpc.projects.getAll.useQuery()
   const usersQuery = trpc.users.getAll.useQuery()
@@ -24,7 +28,7 @@ export const Create = () => {
 
   if (!projectsData || projectsLoading || !departmentsData || departmentsLoading || !usersData || usersLoading) {
     return (
-      <AppLayout>
+      <AppLayout showTopMenu>
         <Spacer size={theme.spaces.s5} />
         <RectPlaceholder />
       </AppLayout>

@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { adminProcedure, middleware, protectedProcedure, publicProcedure, router } from "../createRouter"
+import { adminProcedure, protectedProcedure, publicProcedure, router } from "../createRouter"
 import { UserRole } from "../../../../shared"
 
 export const createUserInput = z.object({

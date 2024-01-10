@@ -1,5 +1,5 @@
-import { AppLayout } from "../components/layouts/appLayout/AppLayout"
+import { AuthLayout } from "../components/layouts/appLayout/AuthLayout"
 
 export const NotFound = () => {
-  return <AppLayout showTopMenu={false}>404 NOT FOUND</AppLayout>
+  return <AuthLayout>404 NOT FOUND</AuthLayout>
 }

@@ -7,11 +7,14 @@ import { trpc } from "../../utils/trpc"
 import RectPlaceholder from "../../components/placeholder/RectPlaceHolder"
 import { useSafeNumberParam } from "../../hooks/params"
 import { Card, SAllocationCard, SWrapper } from "./ProjectPage.styled"
-import { Project, User, Allocation, projectSchema } from "shared"
+import { Project, User, Allocation } from "shared"
 import { Dropdown } from "../../components/dropdown/Dropdown"
+import { useNavigate } from "react-router-dom"
+import { LINKS } from "../../constants/Links"
 
 export const ProjectPage = () => {
   const projectId = useSafeNumberParam("projectId")
+  const allProjectsQuery = trpc.projects.getByUserId.useQuery()
   const projectQuery = trpc.projects.getById.useQuery({ projectId })
   const allocationsQuery = trpc.allocations.getByProjectId.useQuery({ projectId })
   const workersQuery = trpc.users.getAll.useQuery()
@@ -19,8 +22,18 @@ export const ProjectPage = () => {
   const { data: workersData, isLoading: workersLoading } = workersQuery
   const { data: projectData, isLoading: projectLoading } = projectQuery
   const { data: allocationData, isLoading: allocationsLoading } = allocationsQuery
+  const { data: allProjectsData, isLoading: allProjectsLoading } = allProjectsQuery
 
-  if (!projectData || projectLoading || !allocationData || allocationsLoading || !workersData || workersLoading) {
+  if (
+    !projectData ||
+    projectLoading ||
+    !allocationData ||
+    allocationsLoading ||
+    !workersData ||
+    workersLoading ||
+    !allProjectsData ||
+    allProjectsLoading
+  ) {
     return (
       <AppLayout showTopMenu>
         <Spacer size={theme.spaces.s6} />
@@ -35,23 +48,38 @@ export const ProjectPage = () => {
   )
 
   return (
-    <AppLayout showTopMenu>
+    <AppLayout showTopMenu showCreateLink>
       <Spacer size={theme.spaces.s6} />
-      <ProjectPageContent project={projectData} allocations={allocationData} workers={filteredWorkers} />
+      <ProjectPageContent
+        selectedProject={projectData}
+        allProjects={allProjectsData}
+        allocations={allocationData}
+        workers={filteredWorkers}
+      />
     </AppLayout>
   )
 }
 
 interface ProjectProps {
-  project: Project
+  selectedProject: Project
+  allProjects: Project[]
   allocations: Allocation[]
   workers: User[]
 }
 
 const ProjectPageContent = (props: ProjectProps) => {
-  const { id, name, description, from, to, managerId } = props.project
+  const navigate = useNavigate()
+  const { id, name, description, from, to, managerId } = props.selectedProject
+  const allProjects = props.allProjects
   const allocations = props.allocations
   const workers = props.workers
+
+  const allProjectNames = allProjects.map((project) => project.name)
+  const handleProjectChange = (projectName: string) => {
+    const project = allProjects.find((project) => project.name === projectName)
+    if (!project) return
+    navigate(LINKS.project(project.id))
+  }
 
   return (
     <SWrapper>
@@ -62,7 +90,7 @@ const ProjectPageContent = (props: ProjectProps) => {
             <Spacer size={theme.spaces.s1} />
             <Text type="headerH3">(id: {id})</Text>
           </Flex>
-          {<Dropdown selectedOption={name} options={["Project 1", "Project 2"]} />}
+          {<Dropdown selectedOption={name} options={allProjectNames} setSelectedOption={handleProjectChange} />}
         </Flex>
       </Card>
 
