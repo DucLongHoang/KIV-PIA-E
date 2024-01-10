@@ -2,7 +2,6 @@
 import { PrismaClient } from "@prisma/client"
 import { inferAsyncReturnType } from "@trpc/server"
 import { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify"
-import { checkAuth } from "../fastify/authPlugin"
 
 const prisma = new PrismaClient()
 

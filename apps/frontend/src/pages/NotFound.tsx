@@ -1,4 +1,5 @@
-export const NotFound = () => {
-    return <div></div>
+import { AppLayout } from "../components/layouts/appLayout/AppLayout"
 
+export const NotFound = () => {
+  return <AppLayout showTopMenu={false}>404 NOT FOUND</AppLayout>
 }

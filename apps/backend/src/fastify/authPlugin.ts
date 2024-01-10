@@ -37,36 +37,18 @@ const authDecorator: FastifyPluginAsync<AuthDecoratorOptions> = async (fastify, 
   fastify.decorateRequest<TokenPayload | null>("accessTokenPayload", null)
 }
 
-export const checkAuth = async (options: AuthHookOptions, req: FastifyRequest, res: FastifyReply) => {
-  const { onAccessTokenExpired, refreshTokenCookieName, setResponseAuth } = options
-
+export const checkAuth = async (req: FastifyRequest, res: FastifyReply) => {
   try {
     req.accessTokenPayload = await req.jwtVerify<TokenPayload>()
   } catch (error) {
-    if (!isFastifyError(error)) {
-      throw error
-    }
-
-    // if token is expired or cookie is missing, try to use the refresh token if present in cookies
-    if (error.code === "FST_JWT_AUTHORIZATION_TOKEN_EXPIRED" || error.code === "FST_JWT_NO_AUTHORIZATION_IN_COOKIE") {
-      const oldRefreshToken = req.cookies[refreshTokenCookieName]
-      if (!oldRefreshToken) {
-        return
-      }
-      const unsignedRefresh = req.unsignCookie(oldRefreshToken)
-      if (!unsignedRefresh.valid || unsignedRefresh.renew) {
-        return
-      }
-
-      const { accessTokenPayload, refreshToken } = await onAccessTokenExpired(unsignedRefresh.value ?? "")
-      req.accessTokenPayload = accessTokenPayload
-      await setResponseAuth(res, { accessTokenPayload, refreshToken })
-    }
+    throw error
   }
 }
 
 export interface TokenPayload {
-  userId: string
+  userId: number
+  userName: string
+  userLogin: string
   userRole: UserRole
 }
 
@@ -79,15 +61,6 @@ declare module "fastify" {
   interface FastifyRequest {
     accessTokenPayload: TokenPayload | null
   }
-}
-
-export const authDecoratorDefaultConfig: AuthDecoratorOptions = {
-  cookieSecret: "cookie-secret",
-  accessTokenOptions: {
-    secret: "access-token-secret",
-    lifetimeMinutes: 15,
-    cookieName: "my-cookie",
-  },
 }
 
 export const authDecoratorPlugin = fp(authDecorator, { fastify: ">=3.0.0", name: "fastify-auth" })

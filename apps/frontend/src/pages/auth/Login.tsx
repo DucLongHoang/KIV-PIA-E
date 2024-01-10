@@ -10,6 +10,9 @@ import { Spacer } from "../../components/Spacer"
 import { theme } from "../../styles/stitches.config"
 import { Button } from "../../components/button/Button"
 import { trpc } from "../../utils/trpc"
+import { toasts } from "../../components/toast/toasts"
+import { isTRPCError } from "../../utils/types"
+import { AuthLayout } from "../../components/layouts/appLayout/AuthLayout"
 
 export const Login = () => {
   const loginMutation = trpc.auth.login.useMutation()
@@ -19,18 +22,28 @@ export const Login = () => {
   const navigate = useNavigate()
 
   async function handleSubmit() {
-    const result = await loginMutation.mutateAsync({
-      username: orion,
-      password: password,
-    })
-
-    console.log(result)
-
-    // navigate(LINKS.home)
+    try {
+      await loginMutation.mutateAsync({
+        username: orion,
+        password: password,
+      })
+      toasts.success("Logged in")
+      navigate(LINKS.home)
+    } catch (error) {
+      if (isTRPCError(error)) {
+        if (error.data?.code === "NOT_FOUND") {
+          toasts.error("User with username: " + orion + " not found")
+        }
+        if (error.data?.code === "UNAUTHORIZED") {
+          toasts.error("Incorrect password")
+        }
+      }
+      toasts.error("Something went wrong.")
+    }
   }
 
   return (
-    <AppLayout>
+    <AuthLayout>
       <Spacer size={theme.spaces.s40} />
       <Flex justify={"center"} align={"center"}>
         <SForm
@@ -59,6 +72,6 @@ export const Login = () => {
           </Button>
         </SForm>
       </Flex>
-    </AppLayout>
+    </AuthLayout>
   )
 }

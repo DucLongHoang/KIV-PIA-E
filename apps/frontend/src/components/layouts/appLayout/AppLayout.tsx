@@ -3,13 +3,16 @@ import TopMenu from "./topMenu/TopMenu"
 
 interface Props {
   children?: React.ReactNode
+  showTopMenu?: boolean
 }
 
 export const AppLayout = (props: Props) => {
+  const { children, showTopMenu } = props
+
   return (
     <AppContainer>
-      <TopMenu />
-      {props.children}
+      {showTopMenu && <TopMenu />}
+      {children}
     </AppContainer>
   )
 }

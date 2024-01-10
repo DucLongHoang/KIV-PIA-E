@@ -1,4 +1,6 @@
+import { TRPCClientError } from "@trpc/react-query"
 import { ButtonHTMLAttributes, DetailedHTMLProps } from "react"
+import { AppRouter } from "../../../backend/src/trpc/trpcRouter"
 
 export const assertUnreachable = (arg: never): never => {
   throw new Error(`Didn't expect arg [${arg}] to get here`)
@@ -17,12 +19,6 @@ export interface DateRange {
 
 export type ButtonProps = Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref">
 
-// export function isTRPCError(error: unknown): error is TRPCClientError<AppRouter> {
-//   return error instanceof TRPCClientError
-// }
-
-// export interface QueryData<TRouteKey extends TQuery> {
-//   isLoading: boolean
-//   data?: InferQueryOutput<TRouteKey>
-// }
-
+export function isTRPCError(error: unknown): error is TRPCClientError<AppRouter> {
+  return error instanceof TRPCClientError
+}

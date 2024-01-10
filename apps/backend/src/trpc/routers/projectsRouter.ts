@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { publicProcedure, router } from "../createRouter"
+import { adminProcedure, protectedProcedure, publicProcedure, router } from "../createRouter"
 import { projectSchema } from "../../../../shared"
 
 export const createProjectInput = z.object({
@@ -22,7 +22,7 @@ export const projectsRouter = router({
       const result = await ctx.prisma.project.findUnique({ where: { id: input.projectId } })
       return result
     }),
-  createProject: publicProcedure
+  createProject: adminProcedure
     .input(createProjectInput)
     .output(z.void())
     .mutation(async ({ ctx, input }) => {

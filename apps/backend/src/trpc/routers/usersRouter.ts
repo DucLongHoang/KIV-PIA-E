@@ -1,7 +1,6 @@
 import { z } from "zod"
-import { publicProcedure, router } from "../createRouter"
+import { adminProcedure, middleware, protectedProcedure, publicProcedure, router } from "../createRouter"
 import { UserRole } from "../../../../shared"
-import { Prisma } from "@prisma/client"
 
 export const createUserInput = z.object({
   orionLogin: z.string(),
@@ -13,7 +12,22 @@ export const createUserInput = z.object({
   superiorId: z.number().optional(),
 })
 
+export const authorizedProcedure = publicProcedure.input
+
 export const usersRouter = router({
+  myself: protectedProcedure
+    .input(z.void())
+    .output(
+      z.object({ userName: z.string(), userLogin: z.string(), userRole: z.nativeEnum(UserRole), userId: z.number() })
+    )
+    .query(async ({ ctx }) => {
+      return {
+        userName: ctx.userName,
+        userLogin: ctx.userLogin,
+        userRole: ctx.userRole as UserRole,
+        userId: ctx.userId,
+      }
+    }),
   getAll: publicProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.user.findMany()
   }),
@@ -22,7 +36,7 @@ export const usersRouter = router({
       where: { id: input.id },
     })
   }),
-  create: publicProcedure
+  create: adminProcedure
     .input(createUserInput)
     .output(z.void())
     .mutation(async ({ ctx, input }) => {

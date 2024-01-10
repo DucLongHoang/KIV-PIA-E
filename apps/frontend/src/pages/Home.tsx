@@ -62,8 +62,8 @@ const HomeContent = () => {
           const { id, name, from, to } = project
 
           return (
-            <Link to={LINKS.project(id)}>
-              <SCard key={id}>
+            <Link to={LINKS.project(id)} key={id}>
+              <SCard>
                 <Text type="headerH1">{name}</Text>
                 <Text type="headerH3">
                   {formatDate(from)} - {to ? formatDate(to) : "until done"}
