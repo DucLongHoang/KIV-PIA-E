@@ -13,6 +13,12 @@ function App() {
       links: [
         httpLink({
           url: "http://localhost:5000/trpc",
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            })
+          },
         }),
       ],
     })
