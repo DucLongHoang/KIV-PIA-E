@@ -12,16 +12,25 @@ export const createProjectInput = z.object({
 })
 
 export const projectsRouter = router({
-  getAll: publicProcedure.query(async ({ ctx }) => {
+  getAll: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.project.findMany()
   }),
-  getById: publicProcedure
+  getById: protectedProcedure
     .input(z.object({ projectId: z.number() }))
     .output(z.nullable(projectSchema))
     .query(async ({ ctx, input }) => {
       const result = await ctx.prisma.project.findUnique({ where: { id: input.projectId } })
       return result
     }),
+  getByUserId: protectedProcedure.query(async ({ ctx }) => {
+    const allocationsOfUser = await ctx.prisma.allocation.findMany({
+      where: { workerId: ctx.userId },
+    })
+    const workedOnProjects = allocationsOfUser.map((allocation) => allocation.projectId)
+    return await ctx.prisma.project.findMany({
+      where: { id: { in: workedOnProjects } },
+    })
+  }),
   createProject: adminProcedure
     .input(createProjectInput)
     .output(z.void())
@@ -38,8 +47,4 @@ export const projectsRouter = router({
         data: input,
       })
     }),
-  test: publicProcedure.input(z.object({ number: z.number() })).mutation((req) => {
-    console.log("received this as input: " + req.input.number)
-    return { number: req.input.number + 1 }
-  }),
 })

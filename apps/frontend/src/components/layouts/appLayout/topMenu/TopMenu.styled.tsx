@@ -1,4 +1,4 @@
-import { ZCULogo } from "../../../../styles/images"
+import { Logout, ZCULogo } from "../../../../styles/images"
 import { styled, theme } from "../../../../styles/stitches.config"
 import * as Toolbar from "@radix-ui/react-toolbar"
 
@@ -19,6 +19,14 @@ export const SContainer = styled(Toolbar.Root, {
 
 export const SLogo = styled(ZCULogo, {
   height: theme.sizes.s20,
+  width: "auto",
+  maxHeight: "100%",
+  maxWidth: "100%",
+  objectFit: "contain",
+})
+
+export const SLogout = styled(Logout, {
+  height: theme.sizes.s12,
   width: "auto",
   maxHeight: "100%",
   maxWidth: "100%",

@@ -38,7 +38,7 @@ export const SCard = styled("div", {
   },
 })
 const HomeContent = () => {
-  const projectsQuery = trpc.projects.getAll.useQuery()
+  const projectsQuery = trpc.projects.getByUserId.useQuery()
   const { data, isLoading, error } = projectsQuery
 
   if (!data || isLoading || error) {

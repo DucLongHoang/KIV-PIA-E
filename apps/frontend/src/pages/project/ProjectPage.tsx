@@ -22,10 +22,10 @@ export const ProjectPage = () => {
 
   if (!projectData || projectLoading || !allocationData || allocationsLoading || !workersData || workersLoading) {
     return (
-      <>
-        <Spacer size={theme.spaces.s5} />
+      <AppLayout showTopMenu>
+        <Spacer size={theme.spaces.s6} />
         <RectPlaceholder />
-      </>
+      </AppLayout>
     )
   }
 
@@ -35,11 +35,9 @@ export const ProjectPage = () => {
   )
 
   return (
-    <AppLayout showTopMenu showProjectDropdown>
+    <AppLayout showTopMenu>
       <Spacer size={theme.spaces.s6} />
-
-      <ProjectContent project={projectData} allocations={allocationData} workers={filteredWorkers} />
-      <SAllocationCard />
+      <ProjectPageContent project={projectData} allocations={allocationData} workers={filteredWorkers} />
     </AppLayout>
   )
 }
@@ -50,7 +48,7 @@ interface ProjectProps {
   workers: User[]
 }
 
-const ProjectContent = (props: ProjectProps) => {
+const ProjectPageContent = (props: ProjectProps) => {
   const { id, name, description, from, to, managerId } = props.project
   const allocations = props.allocations
   const workers = props.workers
@@ -64,6 +62,7 @@ const ProjectContent = (props: ProjectProps) => {
             <Spacer size={theme.spaces.s1} />
             <Text type="headerH3">(id: {id})</Text>
           </Flex>
+          {<Dropdown selectedOption={name} options={["Project 1", "Project 2"]} />}
         </Flex>
       </Card>
 

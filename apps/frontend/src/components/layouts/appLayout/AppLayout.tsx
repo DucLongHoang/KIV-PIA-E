@@ -6,11 +6,10 @@ import TopMenu from "./topMenu/TopMenu"
 interface Props {
   children?: React.ReactNode
   showTopMenu?: boolean
-  showProjectDropdown?: boolean
 }
 
 export const AppLayout = (props: Props) => {
-  const { children, showTopMenu, showProjectDropdown } = props
+  const { children, showTopMenu } = props
 
   const myselfQuery = trpc.users.myself.useQuery()
 
@@ -28,14 +27,7 @@ export const AppLayout = (props: Props) => {
 
   return (
     <AppContainer>
-      {showTopMenu && (
-        <TopMenu
-          userLogin={userLogin}
-          userName={userName}
-          userRole={userRole}
-          showProjectDropdown={showProjectDropdown}
-        />
-      )}
+      {showTopMenu && <TopMenu userLogin={userLogin} userName={userName} userRole={userRole} />}
       {children}
     </AppContainer>
   )

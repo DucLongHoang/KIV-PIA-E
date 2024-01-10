@@ -28,10 +28,10 @@ export const usersRouter = router({
         userId: ctx.userId,
       }
     }),
-  getAll: publicProcedure.query(async ({ ctx }) => {
+  getAll: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.user.findMany()
   }),
-  getById: publicProcedure.input(z.object({ id: z.number() })).query(async ({ ctx, input }) => {
+  getById: protectedProcedure.input(z.object({ id: z.number() })).query(async ({ ctx, input }) => {
     return await ctx.prisma.user.findUnique({
       where: { id: input.id },
     })

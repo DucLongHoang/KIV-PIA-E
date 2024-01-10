@@ -1,12 +1,12 @@
 import { z } from "zod"
-import { publicProcedure, router } from "../createRouter"
+import { protectedProcedure, publicProcedure, router } from "../createRouter"
 import { allocationSchema, AllocationState } from "../../../../shared"
 
 export const allocationsRouter = router({
-  getAll: publicProcedure.query(async ({ ctx }) => {
+  getAll: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.allocation.findMany()
   }),
-  getByProjectId: publicProcedure
+  getByProjectId: protectedProcedure
     .input(z.object({ projectId: z.number() }))
     .output(z.array(allocationSchema))
     .query(async ({ ctx, input }) => {
@@ -21,7 +21,7 @@ export const allocationsRouter = router({
 
       return result
     }),
-  getByUserId: publicProcedure
+  getByUserId: protectedProcedure
     .input(z.object({ userId: z.number() }))
     .output(z.array(allocationSchema))
     .query(async ({ ctx, input }) => {

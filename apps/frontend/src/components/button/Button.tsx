@@ -55,6 +55,27 @@ const SButton = styled("button", {
           opacity: 1,
         },
       },
+      iconButton: {
+        ...fontVariants.buttons,
+        border: "none",
+        boxShadow: "none",
+        height: theme.sizes.s14,
+        width: theme.sizes.s14,
+        padding: 0,
+        backgroundColor: theme.colors.white,
+        "&:active": {
+          backgroundColor: theme.colors.lines,
+          transform: "translate(2px, 2px)",
+          opacity: 1,
+        },
+        "&:disabled": {
+          ...fontVariants.disabledButtons,
+          backgroundColor: theme.colors.lines,
+          cursor: "not-allowed",
+          transform: "translate(0px, 0px)",
+          opacity: 1,
+        },
+      },
     },
     isFullWidth: {
       true: {
@@ -68,7 +89,7 @@ const SButton = styled("button", {
 })
 
 interface Props {
-  variant?: "primary" | "secondary"
+  variant?: "primary" | "secondary" | "iconButton"
   disabled?: boolean
   isFullWidth?: boolean
   type?: Pick<ComponentProps<"button">, "type">["type"]
