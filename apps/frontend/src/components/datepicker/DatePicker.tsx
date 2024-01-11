@@ -1,9 +1,10 @@
-import { useState } from "react"
 import { SDatePicker } from "./DatePicker.styled"
 import "react-datepicker/dist/react-datepicker.css"
-import { SLabel } from "../form/FormInput.styled"
+import { SErrorIcon, SErrorWrapper, SLabel } from "../form/FormInput.styled"
 import { Spacer } from "../Spacer"
 import { theme } from "../../styles/stitches.config"
+import { UseFormRegisterReturn } from "react-hook-form"
+import Text from "../Text"
 
 interface DatePickerProps {
   label?: string
@@ -11,9 +12,19 @@ interface DatePickerProps {
   selected?: Date | null
   minDate?: Date
   placeholder?: string
+  error?: string
+  formRegisterProps?: UseFormRegisterReturn
 }
 
-export const DatePicker = ({ label, selected, onChange, minDate, placeholder }: DatePickerProps) => {
+export const DatePicker = ({
+  label,
+  selected,
+  onChange,
+  minDate,
+  placeholder,
+  error,
+  formRegisterProps,
+}: DatePickerProps) => {
   return (
     <>
       {label && (
@@ -29,7 +40,31 @@ export const DatePicker = ({ label, selected, onChange, minDate, placeholder }: 
         onChange={onChange}
         minDate={minDate}
         placeholderText={placeholder}
-      />
+      >
+        <input type="hidden" value={selected?.toString()} {...formRegisterProps} />
+      </SDatePicker>
+
+      {error && (
+        <>
+          <Spacer size={theme.spaces.s3} />
+
+          <SErrorWrapper align="center" justify="start" size={"default"}>
+            <SErrorIcon />
+
+            <Spacer size={theme.spaces.s3} />
+
+            <Text
+              type="headerH5Negative"
+              css={{
+                // TODO: this will be clamped to 2 lines and will be truncated in future
+                ellipsis: {},
+              }}
+            >
+              {error}
+            </Text>
+          </SErrorWrapper>
+        </>
+      )}
     </>
   )
 }

@@ -8,6 +8,10 @@ import { trpc } from "../../utils/trpc"
 import { Department, Project, User } from "shared"
 import { Dropdown } from "../../components/dropdown/Dropdown"
 import { DatePicker } from "../../components/datepicker/DatePicker"
+import { CreateProjectFormValues, useCreateProjectFormSchema } from "../../utils/formSchemas"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { toasts } from "../../components/toast/toasts"
 
 interface CreateProjectProps {
   departments: Department[]
@@ -17,10 +21,7 @@ interface CreateProjectProps {
 export const CreateProject = ({ users, projects, departments }: CreateProjectProps) => {
   const today = new Date()
 
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
-
-  const [from, setFrom] = useState<Date>(today)
+  const [from, setFrom] = useState<Date | null>(null)
   const [to, setTo] = useState<Date | null>(null)
 
   const [selectedDepartment, setSelectedDepartment] = useState<Department | null>(null)
@@ -29,11 +30,23 @@ export const CreateProject = ({ users, projects, departments }: CreateProjectPro
   const handleSelectManager = (managerName: string) => {
     const manager = users.find((user) => user.fullName === managerName)
     setSelectedManager(manager ?? null)
+    form.setValue("manager", manager?.fullName ?? "")
   }
 
   const handleSelectDepartment = (departmentName: string) => {
     const department = departments.find((department) => department.name === departmentName)
     setSelectedDepartment(department ?? null)
+    form.setValue("department", department?.name ?? "")
+  }
+
+  const handleFromDateChange = (date: Date) => {
+    setFrom(date)
+    form.setValue("from", date)
+  }
+
+  const handleToDateChange = (date: Date) => {
+    setTo(date)
+    form.setValue("to", date)
   }
 
   const projectsMutation = trpc.projects.createProject.useMutation()
@@ -41,42 +54,43 @@ export const CreateProject = ({ users, projects, departments }: CreateProjectPro
   const departmentOptions = departments.map((department) => department.name)
   const userOptions = users.map((user) => user.fullName)
 
-  const projectNames = projects.map((project) => project.name)
+  const { schema } = useCreateProjectFormSchema()
+  const form = useForm<CreateProjectFormValues>({
+    resolver: zodResolver(schema),
+    mode: "onBlur",
+  })
 
-  async function handleSubmit() {
-    await projectsMutation.mutateAsync({
-      name: name,
-      description: description,
-      departmentId: selectedDepartment?.id ?? 1,
-      managerId: selectedManager?.id ?? 1,
-      from: from,
-      to: to,
-    })
+  async function onSubmit(formValues: CreateProjectFormValues) {
+    try {
+      await projectsMutation.mutateAsync({
+        name: formValues.name,
+        description: formValues.description,
+        departmentId: departments.find((department) => department.name === formValues.department)?.id ?? 1,
+        managerId: users.find((user) => user.fullName === formValues.manager)?.id ?? 1,
+        from: formValues.from,
+        to: formValues.to,
+      })
+      toasts.success("Project created")
+    } catch (error) {
+      console.log(error)
+      toasts.error("Oops, an error occurred")
+    }
   }
 
   return (
-    <SForm
-      onSubmit={(e) => {
-        e.preventDefault()
-        handleSubmit()
-      }}
-    >
+    <SForm onSubmit={form.handleSubmit(onSubmit)}>
       <FormInput
         label={"Project name"}
-        children={<input placeholder="project-name" value={name} onChange={(value) => setName(value.target.value)} />}
+        error={form.formState.errors.name?.message}
+        children={<input placeholder="project-name" {...form.register("name")} />}
       />
 
       <Spacer size={theme.spaces.s4} />
 
       <FormInput
         label={"Project description"}
-        children={
-          <input
-            placeholder="project-description"
-            value={description}
-            onChange={(value) => setDescription(value.target.value)}
-          />
-        }
+        error={form.formState.errors.description?.message}
+        children={<input placeholder="project-description" {...form.register("description")} />}
       />
 
       <Spacer size={theme.spaces.s4} />
@@ -84,7 +98,9 @@ export const CreateProject = ({ users, projects, departments }: CreateProjectPro
       <Dropdown
         label={"Department"}
         options={departmentOptions}
-        placeholder={"KIV"}
+        placeholder={"department"}
+        error={form.formState.errors.department?.message}
+        formRegisterProps={form.register("department")}
         selectedOption={selectedDepartment?.name}
         setSelectedOption={handleSelectDepartment}
       />
@@ -95,6 +111,8 @@ export const CreateProject = ({ users, projects, departments }: CreateProjectPro
         label={"Manager"}
         options={userOptions}
         placeholder={"manager"}
+        error={form.formState.errors.manager?.message}
+        formRegisterProps={form.register("manager")}
         selectedOption={selectedManager?.fullName}
         setSelectedOption={handleSelectManager}
       />
@@ -104,10 +122,10 @@ export const CreateProject = ({ users, projects, departments }: CreateProjectPro
       <DatePicker
         label={"From"}
         selected={from}
-        onChange={(value) => {
-          setFrom(value)
-        }}
+        onChange={handleFromDateChange}
         minDate={today}
+        error={form.formState.errors.from?.message}
+        formRegisterProps={form.register("from")}
       />
 
       <Spacer size={theme.spaces.s4} />
@@ -115,15 +133,14 @@ export const CreateProject = ({ users, projects, departments }: CreateProjectPro
       <DatePicker
         label={"To (optional)"}
         selected={to}
-        onChange={(value) => {
-          setTo(value)
-        }}
-        minDate={from}
+        onChange={handleToDateChange}
+        minDate={from ?? today}
+        formRegisterProps={form.register("to")}
       />
 
       <Spacer size={theme.spaces.s8} />
 
-      <Button variant="secondary" isFullWidth type="submit">
+      <Button variant="secondary" isFullWidth type="submit" isSubmitting={form.formState.isSubmitting}>
         Create project
       </Button>
     </SForm>

@@ -1,4 +1,3 @@
-import React, { useState } from "react"
 import DatePicker from "react-datepicker"
 import { styled, theme } from "../../styles/stitches.config"
 
@@ -8,7 +7,8 @@ export const SDatePicker = styled(DatePicker, {
   backgroundColor: theme.colors.white,
   boxShadow: theme.shadows.default,
 
-  minWidth: theme.spaces.s60,
+  minWidth: theme.spaces.s50,
+  width: theme.spaces.s74,
   paddingTop: theme.spaces.s4,
   paddingBottom: theme.spaces.s4,
   paddingLeft: theme.spaces.s6,

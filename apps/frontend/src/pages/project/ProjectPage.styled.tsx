@@ -53,7 +53,9 @@ export const SCard = styled("div", {
 
 export const SAllocationCard = styled("div", {
   display: "flex",
-  direction: "row",
+  flexDirection: "row",
+
+  justifyContent: "space-between",
 })
 
 export const Card = (props: PropsWithChildren<CardProps>) => {

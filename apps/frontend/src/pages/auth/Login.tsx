@@ -1,7 +1,5 @@
-import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { LINKS } from "../../constants/Links"
-import { AppLayout } from "../../components/layouts/appLayout/AppLayout"
 import { Flex } from "../../components/Flex"
 import { SForm } from "../../components/form/FormInput.styled"
 import { FormInput } from "../../components/form/FormInput"
@@ -13,26 +11,32 @@ import { trpc } from "../../utils/trpc"
 import { toasts } from "../../components/toast/toasts"
 import { isTRPCError } from "../../utils/types"
 import { AuthLayout } from "../../components/layouts/appLayout/AuthLayout"
+import { LoginFormValues, useLoginFormSchema } from "../../utils/formSchemas"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 export const Login = () => {
+  const navigate = useNavigate()
   const loginMutation = trpc.auth.login.useMutation()
 
-  const [orion, setOrion] = useState("")
-  const [password, setPassword] = useState("")
-  const navigate = useNavigate()
+  const { schema } = useLoginFormSchema()
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(schema),
+    mode: "onBlur",
+  })
 
-  async function handleSubmit() {
+  async function onSubmit(formValues: LoginFormValues) {
     try {
       await loginMutation.mutateAsync({
-        username: orion,
-        password: password,
+        username: formValues.orionLogin,
+        password: formValues.password,
       })
       toasts.success("Logged in")
       navigate(LINKS.home)
     } catch (error) {
       if (isTRPCError(error)) {
         if (error.data?.code === "NOT_FOUND") {
-          toasts.error("User with username: " + orion + " not found")
+          toasts.error("User with username: " + formValues.orionLogin + " not found")
         }
         if (error.data?.code === "UNAUTHORIZED") {
           toasts.error("Incorrect password")
@@ -46,28 +50,25 @@ export const Login = () => {
     <AuthLayout>
       <Spacer size={theme.spaces.s40} />
       <Flex justify={"center"} align={"center"}>
-        <SForm
-          onSubmit={(e) => {
-            e.preventDefault()
-            handleSubmit()
-          }}
-        >
+        <SForm onSubmit={form.handleSubmit(onSubmit)}>
           <FormInput
             label={"Orion login"}
-            children={<input placeholder="orion-login" value={orion} onChange={(e) => setOrion(e.target.value)} />}
+            error={form.formState.errors.orionLogin ? "Orion login is required" : undefined}
+            children={<input placeholder="orion-login" {...form.register("orionLogin")} />}
           />
 
           <Spacer size={theme.spaces.s4} />
 
-          {/* <PasswordInput label={"Password"} placeholder="******"/> */}
-          <FormInput
+          <PasswordInput
             label={"Password"}
-            children={<input placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />}
+            placeholder="******"
+            error={form.formState.errors.password?.message}
+            formRegisterProps={form.register("password")}
           />
 
           <Spacer size={theme.spaces.s4} />
 
-          <Button variant="secondary" isFullWidth type="submit">
+          <Button variant="secondary" isFullWidth type="submit" isSubmitting={form.formState.isSubmitting}>
             Login
           </Button>
         </SForm>

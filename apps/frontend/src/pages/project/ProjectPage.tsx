@@ -109,7 +109,7 @@ const ProjectPageContent = (props: ProjectProps) => {
           const allocation = allocations.find((allocation) => allocation.workerId === worker.id)
 
           return (
-            <SAllocationCard>
+            <SAllocationCard key={worker.id}>
               <Text type="textsLarge">{worker.orionLogin}</Text>
               <Spacer size={theme.spaces.s1} />
               <Text type="textsLarge">{worker.fullName}</Text>

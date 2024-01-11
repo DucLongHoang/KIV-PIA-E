@@ -49,7 +49,17 @@ export const usersRouter = router({
       }
 
       await ctx.prisma.user.create({
-        data: input,
+        data: {
+          orionLogin: input.orionLogin,
+          email: input.email,
+          fullName: input.fullName,
+          password: input.password,
+          role: input.role,
+          department: { connect: { id: input.departmentId } },
+          superior: {
+            connect: input.superiorId ? { id: input.superiorId } : undefined,
+          },
+        },
       })
     }),
 })

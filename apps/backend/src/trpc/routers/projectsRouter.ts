@@ -6,7 +6,7 @@ export const createProjectInput = z.object({
   name: z.string(),
   description: z.string(),
   from: z.date(),
-  to: z.date().nullable(),
+  to: z.date().optional(),
   departmentId: z.number(),
   managerId: z.number(),
 })
