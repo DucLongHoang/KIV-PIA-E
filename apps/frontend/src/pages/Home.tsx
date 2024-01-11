@@ -7,6 +7,7 @@ import { formatDate } from "../utils/date"
 import { LINKS } from "../constants/Links"
 import { trpc } from "../utils/trpc"
 import HomePlaceholder from "../components/placeholder/HomePlaceholder"
+import { Flex } from "../components/Flex"
 
 export const SGrid = styled("div", {
   display: "grid",
@@ -18,6 +19,7 @@ export const SGrid = styled("div", {
 export const SCard = styled("div", {
   display: "flex",
   flexDirection: "column",
+  justifyContent: "space-between",
   boxShadow: theme.shadows.default,
   height: theme.spaces.s48,
   padding: theme.spaces.s10,
@@ -51,23 +53,27 @@ const HomeContent = () => {
     )
   }
 
-  const projects = data
-
   return (
     <>
       <Text type="headerH1">Projects</Text>
       <Spacer size={theme.spaces.s5} />
       <SGrid>
-        {projects.map((project) => {
-          const { id, name, from, to } = project
+        {data.map((projectInfo) => {
+          const { id, name, from, to, department, manager } = projectInfo
 
           return (
             <Link to={LINKS.project(id)} key={id}>
               <SCard>
-                <Text type="headerH1">{name}</Text>
-                <Text type="headerH3">
-                  {formatDate(from)} - {to ? formatDate(to) : "until done"}
-                </Text>
+                <Flex direction={"column"}>
+                  <Text type="headerH1">{name}</Text>
+                  <Text type="headerH3">
+                    {formatDate(from)} - {to ? formatDate(to) : "until done"}
+                  </Text>
+                </Flex>
+                <Flex direction={"column"}>
+                  <Text type="textsLarge">Dept: {department.name}</Text>
+                  <Text type="textsLarge">Mngr: {manager.fullName}</Text>
+                </Flex>
               </SCard>
             </Link>
           )

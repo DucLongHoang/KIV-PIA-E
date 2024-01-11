@@ -48,6 +48,7 @@ export function getUsers(): User[] {
       fullName: "Sarah Connor",
       password: "123456",
       role: "SUBORDINATE",
+      superiorId: 1,
       // departmentId: 1,
     },
     {
@@ -57,7 +58,7 @@ export function getUsers(): User[] {
       fullName: "Mark Zuckerberg",
       password: "123456",
       role: "SUBORDINATE",
-      // departmentId: 1,
+      superiorId: 1,
     },
     {
       id: 6,
@@ -66,7 +67,7 @@ export function getUsers(): User[] {
       fullName: "Elon Musk",
       password: "123456",
       role: "SUBORDINATE",
-      // departmentId: 2,
+      superiorId: 2,
     },
     {
       id: 7,
@@ -75,7 +76,7 @@ export function getUsers(): User[] {
       fullName: "Jane Doe",
       password: "123456",
       role: "SUBORDINATE",
-      // departmentId: 2,
+      superiorId: 2,
     },
     {
       id: 8,
@@ -84,7 +85,7 @@ export function getUsers(): User[] {
       fullName: "Daniel Smith",
       password: "123456",
       role: "SUBORDINATE",
-      // departmentId: 3,
+      superiorId: 3,
     },
     {
       id: 9,
@@ -93,7 +94,7 @@ export function getUsers(): User[] {
       fullName: "Emma Watson",
       password: "123456",
       role: "SUBORDINATE",
-      // departmentId: 3,
+      superiorId: 3,
     },
   ]
 }
