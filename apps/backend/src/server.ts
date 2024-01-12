@@ -5,7 +5,6 @@ import { appRouter } from "./trpc/trpcRouter"
 import { createContext } from "./trpc/context"
 import { authDecoratorPlugin } from "./fastify/authPlugin"
 import { authDecoratorDefaultConfig } from "./utils/auth"
-import "dotenv/config"
 import env from "./utils/env"
 
 const fastify = Fastify({ logger: true })
