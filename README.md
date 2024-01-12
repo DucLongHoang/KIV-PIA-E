@@ -54,3 +54,9 @@ Semestral project of KIV/PIA-E - Programming of internet applications
   - username: `markz`, password: `123456`, role: SUBORDINATE
   - username: `duclong`, password: `123456`, role: SUPERIOR
   - username: `tcook`, password: `123456`, role: SECRETARIAT
+
+## Known problems
+
+- there might be a problem with docker-compose so the `npm run db:up` cmd might fail
+  - be sure to update docker-compose or instead manually run `docker compose up -d`
+    - notice the difference between `docker compose` and `docker-compose`
