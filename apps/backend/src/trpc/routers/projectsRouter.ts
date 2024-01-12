@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { adminProcedure, protectedProcedure, router } from "../createRouter"
-import { projectSchema } from "../../../../shared"
+import { Project, projectSchema } from "../../../../shared"
 
 export const createProjectInput = z.object({
   name: z.string(),
@@ -14,6 +14,13 @@ export const createProjectInput = z.object({
 const projectWithDepartmentAndManagerSchema = projectSchema.extend({
   department: z.object({ name: z.string(), managerId: z.number().nullable() }),
   manager: z.object({ fullName: z.string() }),
+})
+
+export const partialProjectUpdateSchema = z.object({
+  name: z.string().optional(),
+  description: z.string().optional(),
+  from: z.date().optional(),
+  to: z.date().optional(),
 })
 
 export const projectsRouter = router({
@@ -110,6 +117,14 @@ export const projectsRouter = router({
 
       await ctx.prisma.project.create({
         data: input,
+      })
+    }),
+  updateProject: protectedProcedure
+    .input(z.object({ projectId: z.number(), updateData: partialProjectUpdateSchema }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.project.update({
+        where: { id: input.projectId },
+        data: input.updateData,
       })
     }),
 })

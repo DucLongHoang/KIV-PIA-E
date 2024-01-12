@@ -37,6 +37,18 @@ export const useLoginFormSchema = () => {
   return { schema: schema }
 }
 
+export const useProjectUpdateFormSchema = () => {
+  const schema = z.object({
+    name: z.string().optional(),
+    description: z.string().optional(),
+    from: z.date().optional(),
+    to: z.date().optional(),
+  })
+
+  return { schema: schema }
+}
+
 export type CreateProjectFormValues = z.infer<ReturnType<typeof useCreateProjectFormSchema>["schema"]>
 export type CreateUserFormValues = z.infer<ReturnType<typeof useCreateUserFormSchema>["schema"]>
 export type LoginFormValues = z.infer<ReturnType<typeof useLoginFormSchema>["schema"]>
+export type ProjectUpdateFormValues = z.infer<ReturnType<typeof useProjectUpdateFormSchema>["schema"]>
