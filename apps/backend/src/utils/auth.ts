@@ -4,6 +4,7 @@ import { AuthDecoratorOptions, Tokens } from "../fastify/authPlugin"
 import { CookieSerializeOptions } from "@fastify/cookie"
 import { addDays, addMinutes } from "date-fns"
 import { UserRole } from "../../../shared"
+import env from "./env"
 
 const cookiePrefix = "KIV-PIA-E"
 const accessTokenName = `${cookiePrefix}_Auth-Access-Token`
@@ -21,9 +22,9 @@ const baseCookieOptions: CookieSerializeOptions = {
 }
 
 export const authDecoratorDefaultConfig: AuthDecoratorOptions = {
-  cookieSecret: "cookie-secret",
+  cookieSecret: env.COOKIE_SECRET,
   accessTokenOptions: {
-    secret: "access-token-secret",
+    secret: env.ACCESS_TOKEN_SECRET,
     lifetimeMinutes: 60,
     cookieName: accessTokenName,
   },

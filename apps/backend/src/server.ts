@@ -4,10 +4,9 @@ import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify"
 import { appRouter } from "./trpc/trpcRouter"
 import { createContext } from "./trpc/context"
 import { authDecoratorPlugin } from "./fastify/authPlugin"
-import { fastifyCookie } from "@fastify/cookie"
-import { fastifyJwt } from "@fastify/jwt"
-import { ok } from "assert"
 import { authDecoratorDefaultConfig } from "./utils/auth"
+import "dotenv/config"
+import env from "./utils/env"
 
 const fastify = Fastify({ logger: true })
 
@@ -30,7 +29,7 @@ async function start() {
   } as any)
 
   await fastify
-    .listen({ port: 5000 })
+    .listen({ port: env.SERVER_PORT, host: "localhost" })
     .then((address) => {
       console.log(`Server is running on http://localhost:${address}/`)
     })
