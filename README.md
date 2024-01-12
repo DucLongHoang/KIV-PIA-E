@@ -36,27 +36,21 @@ Semestral project of KIV/PIA-E - Programming of internet applications
 
 ## How to - first launch
 
-- after cloning the repository:
-- install dependencies in root: execute `npm i`
-  - execute the same command in these folders as well:
-    - `./packages`
-    - `./apps/backend`
-    - `./apps/frontend`
-    - `./apps/shared` and stay in this directory
-- while in `./apps/shared`: execute `npm run build`
-  - this builds the shared dependencies
-- now we have to link the shared dependencies to the FE
-  - move to `./apps/frontend/node_modules`
-    - execute: `rm -rf shared`
-    - execute: `ln -s ../../shared/dist shared`
-- go back to root of app
-- go to backend root: execute `cd apps/backend`
-  - create `.env` file: execute `touch .env`
-  - fill `.env` file with this line:
-    - `DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public`
-  - run database: execute `docker-compose up -d`
-  - migrate database: execute `npm run db:migrate`
-  - seed database: execute `npm run db:seed`
-- use `DBeaver` to see the data
-- go back to project root
-- execute: `npm run start` or `npx turbo run start`
+- after cloning the repository navigate to root
+- install dependencies: `npm run install:all`
+- build shared types: `npm run build:shared`
+- link shared types: `npm run link:shared`
+- start Docker container with database: `npm run db:up`
+- migrate the database: `npm run db:migrate`
+- seed the database: `npm run db:seed`
+- start the project: `npm run start`
+- the backend server will be running on localhost on port `5000`
+- the frontend will be running on localhost on port `3000`
+- enjoy
+
+## Test
+
+- with the app running, try to log as some users:
+  - username: `markz`, password: `123456`, role: SUBORDINATE
+  - username: `duclong`, password: `123456`, role: SUPERIOR
+  - username: `tcook`, password: `123456`, role: SECRETARIAT
