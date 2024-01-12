@@ -1,16 +1,17 @@
 import { Prisma } from "@prisma/client"
 import { WithId } from "../utils"
+import * as argon2 from "argon2"
 
 type User = WithId<Prisma.UserUncheckedCreateWithoutDepartmentInput>
 
-export function getUsers(): User[] {
+export async function getUsers(): Promise<User[]> {
   return [
     {
       id: 0,
       orionLogin: "tcook",
       email: "tim.cook@example.com",
       fullName: "Tim Cook",
-      password: "123456",
+      password: await argon2.hash("123456"),
       role: "SECRETARIAT",
       // departmentId: 0,
     },
@@ -19,7 +20,7 @@ export function getUsers(): User[] {
       orionLogin: "duclong",
       email: "duclonghoang.dlh@gmail.com",
       fullName: "Duc Long hoang",
-      password: "123456",
+      password: await argon2.hash("123456"),
       role: "SUPERIOR",
       // departmentId: 1,
     },
@@ -28,7 +29,7 @@ export function getUsers(): User[] {
       orionLogin: "johny",
       email: "johny@gmail.com",
       fullName: "Johny Cage",
-      password: "123456",
+      password: await argon2.hash("123456"),
       role: "SUPERIOR",
       // departmentId: 2,
     },
@@ -37,7 +38,7 @@ export function getUsers(): User[] {
       orionLogin: "kathy",
       email: "kathy@gmail.com",
       fullName: "Katherine Elizabeth",
-      password: "123456",
+      password: await argon2.hash("123456"),
       role: "SUPERIOR",
       // departmentId: 3,
     },
@@ -46,7 +47,7 @@ export function getUsers(): User[] {
       orionLogin: "sarahc",
       email: "sarah.connor@example.com",
       fullName: "Sarah Connor",
-      password: "123456",
+      password: await argon2.hash("123456"),
       role: "SUBORDINATE",
       superiorId: 1,
       // departmentId: 1,
@@ -56,7 +57,7 @@ export function getUsers(): User[] {
       orionLogin: "markz",
       email: "mark.zuckerberg@example.com",
       fullName: "Mark Zuckerberg",
-      password: "123456",
+      password: await argon2.hash("123456"),
       role: "SUBORDINATE",
       superiorId: 1,
     },
@@ -65,7 +66,7 @@ export function getUsers(): User[] {
       orionLogin: "elonm",
       email: "elon.musk@example.com",
       fullName: "Elon Musk",
-      password: "123456",
+      password: await argon2.hash("123456"),
       role: "SUBORDINATE",
       superiorId: 2,
     },
@@ -74,7 +75,7 @@ export function getUsers(): User[] {
       orionLogin: "jdoe",
       email: "jane.doe@example.com",
       fullName: "Jane Doe",
-      password: "123456",
+      password: await argon2.hash("123456"),
       role: "SUBORDINATE",
       superiorId: 2,
     },
@@ -83,7 +84,7 @@ export function getUsers(): User[] {
       orionLogin: "dsmith",
       email: "daniel.smith@example.com",
       fullName: "Daniel Smith",
-      password: "123456",
+      password: await argon2.hash("123456"),
       role: "SUBORDINATE",
       superiorId: 3,
     },
@@ -92,7 +93,7 @@ export function getUsers(): User[] {
       orionLogin: "emwatson",
       email: "emma.watson@example.com",
       fullName: "Emma Watson",
-      password: "123456",
+      password: await argon2.hash("123456"),
       role: "SUBORDINATE",
       superiorId: 3,
     },

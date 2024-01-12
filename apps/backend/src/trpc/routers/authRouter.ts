@@ -2,6 +2,7 @@ import { z } from "zod"
 import { protectedProcedure, publicProcedure, router } from "../createRouter"
 import { clearResponseAuth, createAccessTokenPayload, setResponseAuth } from "../../utils/auth"
 import { TRPCError } from "@trpc/server"
+import * as argon2 from "argon2"
 
 export const loginInput = z.object({
   username: z.string(),
@@ -18,11 +19,17 @@ export const authRouter = router({
       ctx.logger.info("Logging in user with username: " + input.username)
 
       const user = await ctx.prisma.user.findUnique({
-        where: { orionLogin: input.username, password: input.password },
+        where: { orionLogin: input.username },
       })
 
       if (!user) {
-        throw new TRPCError({ code: "NOT_FOUND", message: "User with this username and password does not exist" })
+        throw new TRPCError({ code: "NOT_FOUND", message: "User with this username does not exist" })
+      }
+
+      const isPasswordCorrect = await argon2.verify(user.password, input.password)
+
+      if (!isPasswordCorrect) {
+        throw new TRPCError({ code: "UNAUTHORIZED", message: "Incorrect password" })
       }
 
       const accessTokenPayload = createAccessTokenPayload(user)

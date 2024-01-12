@@ -11,7 +11,7 @@ async function seedDb(prisma: PrismaClient) {
     })
   }
 
-  for (const user of getUsers()) {
+  for (const user of await getUsers()) {
     await prisma.user.create({
       data: user,
     })
