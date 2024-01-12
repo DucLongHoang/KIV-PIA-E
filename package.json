@@ -8,7 +8,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:frontend": "cd apps/frontend && npm run start",
     "start:backend": "cd apps/backend && npm run start",
-    "start": "npm-run-all --parallel start:frontend start:backend"
+    "start": "npm-run-all --parallel start:frontend start:backend",
+    "install:all": "npm install && npm run install:apps && npm run install:packages",
+    "install:apps": "cd ./apps/backend && npm install && cd ../frontend && npm install && cd ../shared && npm install",
+    "install:packages": "cd ./packages && npm install",
+    "build:shared": "cd ./apps/shared && npm run build",
+    "link:shared": "cd ./apps/frontend/node_modules && rm -rf shared && ln -s ../../shared/dist shared",
+    "db:up": "cd ./apps/backend && docker-compose up -d",
+    "db:migrate": "cd ./apps/backend && npm run db:migrate",
+    "db:seed": "cd ./apps/backend && npm run db:seed"
   },
   "author": "",
   "license": "ISC",
