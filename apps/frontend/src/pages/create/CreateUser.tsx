@@ -61,6 +61,9 @@ export const CreateUser = ({ users, projects, departments }: CreateUserProps) =>
         superiorId: superiors.find((superior) => superior.fullName === formValues.superior)?.id,
       })
       toasts.success("User created")
+      setTimeout(() => {
+        window.location.reload()
+      }, 1500)
     } catch (error) {
       console.log(error)
       toasts.error("Oops, an error occurred")

@@ -5,6 +5,8 @@ import { SAllocationCard, SAllocationTable } from "./ProjectPage.styled"
 import { Button } from "../../components/button/Button"
 import { theme } from "../../styles/stitches.config"
 import { Edit } from "../../styles/images"
+import { useModal } from "../../hooks/useModal"
+import { ProjectionAllocationEdit } from "./ProjectAllocationEdit"
 
 export interface Props {
   selectedProject: Project
@@ -16,6 +18,8 @@ export interface Props {
 
 export const ProjectAllocationSection = ({ allocations, workers, selfUserId, canEdit, selectedProject }: Props) => {
   const allocationHeaders = ["Name", "Orion login", "Task", "Status", "Scope", "From", "To", "Relationship", ""]
+
+  const { setModal } = useModal()
 
   return (
     <>
@@ -47,6 +51,19 @@ export const ProjectAllocationSection = ({ allocations, workers, selfUserId, can
             relationship,
           ]
 
+          const showEditAllocationModal = () =>
+            setModal({
+              modal: (
+                <ProjectionAllocationEdit
+                  projectId={selectedProject.id}
+                  projectName={selectedProject.name}
+                  worker={worker}
+                  allocation={allocation}
+                />
+              ),
+              isFullscreenOnMobile: true,
+            })
+
           return (
             <SAllocationCard key={worker.id}>
               {allocationValues.map((value) => (
@@ -59,7 +76,7 @@ export const ProjectAllocationSection = ({ allocations, workers, selfUserId, can
                 <Button
                   variant="iconButton"
                   style={{ height: theme.sizes.s6.value }}
-                  children={<Edit height={theme.sizes.s4.value} />}
+                  children={<Edit height={theme.sizes.s4.value} onClick={showEditAllocationModal} />}
                 />
               ) : null}
             </SAllocationCard>

@@ -11,7 +11,7 @@ import { ProjectAllocationSection } from "./ProjectAllocationSection"
 
 export const ProjectPageContent = (props: ProjectProps) => {
   const navigate = useNavigate()
-  const { name, description, from, to } = props.selectedProject
+  const { name, description, from, to, id } = props.selectedProject
   const { allProjects, allocations, workers, selfUserId, managerName, departmentName, canEdit } = props
 
   const allProjectNames = allProjects.map((project) => project.name)
@@ -29,6 +29,8 @@ export const ProjectPageContent = (props: ProjectProps) => {
       <Spacer size={theme.spaces.s6} />
 
       <ProjectInfoSection
+        projectName={name}
+        projectId={id}
         canEdit={canEdit}
         managerName={managerName}
         departmentName={departmentName}
@@ -38,7 +40,7 @@ export const ProjectPageContent = (props: ProjectProps) => {
 
       <Spacer size={theme.spaces.s10} />
 
-      <ProjectDescriptionSection canEdit={canEdit} description={description} />
+      <ProjectDescriptionSection canEdit={canEdit} description={description} projectId={id} />
 
       <Spacer size={theme.spaces.s10} />
 

@@ -41,7 +41,7 @@ export const DatePicker = ({
         minDate={minDate}
         placeholderText={placeholder}
       >
-        <input type="hidden" value={selected?.toString()} {...formRegisterProps} />
+        <input type="hidden" defaultValue={selected?.toString()} {...formRegisterProps} />
       </SDatePicker>
 
       {error && (

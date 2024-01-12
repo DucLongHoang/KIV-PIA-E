@@ -71,6 +71,9 @@ export const CreateProject = ({ users, projects, departments }: CreateProjectPro
         to: formValues.to,
       })
       toasts.success("Project created")
+      setTimeout(() => {
+        window.location.reload()
+      }, 1500)
     } catch (error) {
       console.log(error)
       toasts.error("Oops, an error occurred")

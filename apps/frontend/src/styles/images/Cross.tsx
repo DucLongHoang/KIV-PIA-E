@@ -2,7 +2,7 @@ import * as React from "react"
 
 function SvgCross(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg enable-background="new 0 0 32 32" height="32px" version="1.1" viewBox="0 0 32 32" width="32px" {...props}>
+    <svg enableBackground="new 0 0 32 32" height="32px" version="1.1" viewBox="0 0 32 32" width="32px" {...props}>
       <g id="background">
         <rect fill="none" height="32" width="32" />
       </g>

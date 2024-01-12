@@ -1,4 +1,4 @@
-import { UserRole } from "shared"
+import { AllocationState, UserRole } from "shared"
 import z from "zod"
 
 export const useCreateUserFormSchema = () => {
@@ -48,7 +48,20 @@ export const useProjectUpdateFormSchema = () => {
   return { schema: schema }
 }
 
+export const useAllocationUpdateFormSchema = () => {
+  const schema = z.object({
+    description: z.string().optional(),
+    from: z.date().optional(),
+    to: z.date().optional(),
+    scope: z.string().optional(),
+    allocationState: z.nativeEnum(AllocationState).optional(),
+  })
+
+  return { schema: schema }
+}
+
 export type CreateProjectFormValues = z.infer<ReturnType<typeof useCreateProjectFormSchema>["schema"]>
 export type CreateUserFormValues = z.infer<ReturnType<typeof useCreateUserFormSchema>["schema"]>
 export type LoginFormValues = z.infer<ReturnType<typeof useLoginFormSchema>["schema"]>
 export type ProjectUpdateFormValues = z.infer<ReturnType<typeof useProjectUpdateFormSchema>["schema"]>
+export type AllocationUpdateFormValues = z.infer<ReturnType<typeof useAllocationUpdateFormSchema>["schema"]>

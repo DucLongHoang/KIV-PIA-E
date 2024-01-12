@@ -6,6 +6,7 @@ import { httpLink } from "@trpc/react-query"
 import superjson from "superjson"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { ModalProvider } from "./components/modal/ModalProvider"
 
 function App() {
   const [queryClient] = useState(() => new QueryClient())
@@ -30,7 +31,9 @@ function App() {
     <>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
-          <Router />
+          <ModalProvider>
+            <Router />
+          </ModalProvider>
         </QueryClientProvider>
       </trpc.Provider>
 

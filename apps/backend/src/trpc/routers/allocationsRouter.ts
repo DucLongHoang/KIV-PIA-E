@@ -2,6 +2,14 @@ import { z } from "zod"
 import { protectedProcedure, router } from "../createRouter"
 import { allocationSchema, AllocationState } from "../../../../shared"
 
+export const partialAllocationUpdateSchema = z.object({
+  scope: z.string().optional(),
+  description: z.string().optional(),
+  from: z.date().optional(),
+  to: z.date().optional(),
+  allocationState: z.nativeEnum(AllocationState).optional(),
+})
+
 export const allocationsRouter = router({
   getAll: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.allocation.findMany()
@@ -65,6 +73,32 @@ export const allocationsRouter = router({
         ...allocation,
         state: allocation.state as AllocationState,
       }))
+
+      return result
+    }),
+  updateAllocation: protectedProcedure
+    .input(z.object({ projectId: z.number(), workerId: z.number(), updateData: partialAllocationUpdateSchema }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.allocation.updateMany({
+        where: { projectId: input.projectId, workerId: input.workerId },
+        data: {
+          description: input.updateData.description,
+          scope: input.updateData.scope ? parseFloat(input.updateData.scope) : undefined,
+          from: input.updateData.from,
+          to: input.updateData.to,
+          state: input.updateData.allocationState,
+        },
+      })
+    }),
+  getAllocationScopeSumByUserId: protectedProcedure
+    .input(z.object({ userId: z.number() }))
+    .output(z.number())
+    .query(async ({ ctx, input }) => {
+      const allocations = await ctx.prisma.allocation.findMany({
+        where: { workerId: input.userId, state: "ACTIVE" },
+      })
+
+      const result = allocations.reduce((acc, curr) => acc + curr.scope, 0)
 
       return result
     }),
