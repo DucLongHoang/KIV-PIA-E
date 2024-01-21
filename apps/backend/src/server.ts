@@ -28,7 +28,7 @@ async function start() {
   } as any)
 
   await fastify
-    .listen({ port: env.SERVER_PORT, host: "localhost" })
+    .listen({ port: env.SERVER_PORT, host: "0.0.0.0" })
     .then((address) => {
       console.log(`Server is running on http://localhost:${address}/`)
     })
