@@ -4,9 +4,8 @@ FROM node:16.19.1
 # Create app directory inside the Docker image
 WORKDIR /app
 
-# Install netcat
+# Install netcat and TS
 RUN apt-get update && apt-get install -y netcat
-
 RUN npm install -g typescript
 
 # Install backend dependencies

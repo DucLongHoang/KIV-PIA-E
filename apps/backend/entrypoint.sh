@@ -1,12 +1,6 @@
 #!/bin/bash
 set -e
 
-# Remove the shared library in node_modules if already there
-rm -rf /app/frontend/node_modules/shared
-
-# Symlink the shared dist to the frontend node_modules
-ln -s /app/shared/dist /app/frontend/node_modules/shared
-
 # Wait for the PostgreSQL server to be available
 echo "Waiting for postgres..."
 while ! nc -z postgres 5432; do
