@@ -4,8 +4,8 @@ import { theme } from "../../styles/stitches.config"
 import { trpc } from "../../utils/trpc"
 import RectPlaceholder from "../../components/placeholder/RectPlaceHolder"
 import { useSafeNumberParam } from "../../hooks/params"
-import { Project, User, Allocation, AllocationState, UserRole } from "shared"
 import { ProjectPageContent } from "./ProjectPageContent"
+import { Allocation, Project, User, UserRole } from "src/types"
 
 export const ProjectPage = () => {
   const projectId = useSafeNumberParam("projectId")

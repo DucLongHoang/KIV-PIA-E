@@ -26,6 +26,7 @@ services:
       - FRONTEND_PORT=3000
     depends_on:
       - postgres
+    entrypoint: /app/backend/entrypoint.sh
 
 volumes:
   postgres_data:

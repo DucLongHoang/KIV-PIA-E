@@ -6,19 +6,15 @@ import { FormInput } from "../../components/form/FormInput"
 import { SForm } from "../../components/form/FormInput.styled"
 import { toasts } from "../../components/toast/toasts"
 import { theme } from "../../styles/stitches.config"
-import {
-  AllocationUpdateFormValues,
-  ProjectUpdateFormValues,
-  useAllocationUpdateFormSchema,
-} from "../../utils/formSchemas"
+import { AllocationUpdateFormValues, useAllocationUpdateFormSchema } from "../../utils/formSchemas"
 import { trpc } from "../../utils/trpc"
 import { Button } from "../../components/button/Button"
 import { DatePicker } from "../../components/datepicker/DatePicker"
-import { Allocation, AllocationState, User } from "shared"
 import Text from "../../components/Text"
 import { Dropdown } from "../../components/dropdown/Dropdown"
 import { useState } from "react"
 import { Loading } from "../Loading"
+import { Allocation, AllocationState, User } from "src/types"
 
 export interface Props {
   projectId: number

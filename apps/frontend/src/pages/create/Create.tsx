@@ -7,9 +7,9 @@ import { Button } from "../../components/button/Button"
 import Text from "../../components/Text"
 import { trpc } from "../../utils/trpc"
 import RectPlaceholder from "../../components/placeholder/RectPlaceHolder"
-import { Department, Project, User } from "shared"
 import { CreateUser } from "./CreateUser"
 import { CreateProject } from "./CreateProject"
+import { Department, Project, User } from "src/types"
 
 interface CreateProps {
   type?: "user" | "project"

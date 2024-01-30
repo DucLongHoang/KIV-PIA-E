@@ -3,12 +3,12 @@ import { Flex } from "../../../Flex"
 import Text from "../../../Text"
 import { Link, useNavigate } from "react-router-dom"
 import { LINKS } from "../../../../constants/Links"
-import { UserRole } from "shared"
 import { trpc } from "../../../../utils/trpc"
 import { Button } from "../../../button/Button"
 import { theme } from "../../../../styles/stitches.config"
 import { Spacer } from "../../../Spacer"
 import { toasts } from "../../../toast/toasts"
+import { UserRole } from "src/types"
 
 interface Props {
   userLogin: string

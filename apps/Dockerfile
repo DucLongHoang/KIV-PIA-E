@@ -4,11 +4,10 @@ FROM node:16.19.1
 # Create app directory inside the Docker image
 WORKDIR /app
 
-# Install shared dependencies and build shared resources
-COPY shared/package*.json ./shared/
-RUN npm install --prefix shared
-COPY shared/ ./shared/
-RUN npm run build --prefix shared
+# Install netcat
+RUN apt-get update && apt-get install -y netcat
+
+RUN npm install -g typescript
 
 # Install backend dependencies
 COPY backend/package*.json ./backend/
@@ -16,7 +15,6 @@ RUN npm install --prefix backend
 
 # Bundle backend source
 COPY backend/ ./backend/
-COPY shared/dist ./backend/node_modules/shared
 
 # Build the backend
 RUN npm run build --prefix backend
@@ -25,18 +23,17 @@ RUN npm run build --prefix backend
 COPY frontend/package*.json ./frontend/
 RUN npm install --prefix frontend
 
-# Remove the shared library in node_modules if already there
-RUN rm -rf ./frontend/node_modules/shared
-
 # Bundle frontend source
 COPY frontend/ ./frontend/
-COPY shared/ ./shared/
-
-# Symlink the shared dist to the frontend node_modules
-RUN ln -s ../shared/dist ./frontend/node_modules/shared
 
 # Build the frontend application
 RUN npm run build --prefix frontend
+
+# Copy the entrypoint script into the image
+COPY backend/entrypoint.sh /app/backend/entrypoint.sh
+
+# Set the script as the entrypoint
+ENTRYPOINT ["/app/backend/entrypoint.sh"]
 
 # Set environment variables
 ENV BACKEND_PORT=5000

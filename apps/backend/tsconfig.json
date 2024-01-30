@@ -9,10 +9,7 @@
     "typeRoots": ["./node_modules/@types", "../shared/dist/types"],
     "strict": true,
     "baseUrl": "..",
-    "skipLibCheck": true,
-    "paths": {
-      "shared": ["shared/dist"]
-    }
+    "skipLibCheck": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

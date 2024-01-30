@@ -1,4 +1,3 @@
-// src/routers/context.ts
 import { PrismaClient } from "@prisma/client"
 import { inferAsyncReturnType } from "@trpc/server"
 import { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify"

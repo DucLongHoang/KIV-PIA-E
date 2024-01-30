@@ -5,13 +5,13 @@ import { SForm } from "../../components/form/FormInput.styled"
 import { FormInput } from "../../components/form/FormInput"
 import { Button } from "../../components/button/Button"
 import { trpc } from "../../utils/trpc"
-import { Department, Project, User } from "shared"
 import { Dropdown } from "../../components/dropdown/Dropdown"
 import { DatePicker } from "../../components/datepicker/DatePicker"
 import { CreateProjectFormValues, useCreateProjectFormSchema } from "../../utils/formSchemas"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toasts } from "../../components/toast/toasts"
+import { Department, Project, User } from "src/types"
 
 interface CreateProjectProps {
   departments: Department[]

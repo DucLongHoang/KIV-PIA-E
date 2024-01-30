@@ -1,4 +1,3 @@
-import { Allocation, AllocationState, Project, User } from "shared"
 import Text from "../../components/Text"
 import { formatDate } from "../../utils/date"
 import { SAllocationCard, SAllocationTable } from "./ProjectPage.styled"
@@ -7,6 +6,7 @@ import { theme } from "../../styles/stitches.config"
 import { Edit } from "../../styles/images"
 import { useModal } from "../../hooks/useModal"
 import { ProjectionAllocationEdit } from "./ProjectAllocationEdit"
+import { Allocation, AllocationState, Project, User } from "src/types"
 
 export interface Props {
   selectedProject: Project

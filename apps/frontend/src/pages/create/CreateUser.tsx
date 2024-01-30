@@ -5,13 +5,13 @@ import { FormInput } from "../../components/form/FormInput"
 import PasswordInput from "../../components/form/PasswordInput"
 import { Button } from "../../components/button/Button"
 import { trpc } from "../../utils/trpc"
-import { Department, Project, User, UserRole } from "shared"
 import { Dropdown } from "../../components/dropdown/Dropdown"
 import { CreateUserFormValues, useCreateUserFormSchema } from "../../utils/formSchemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { toasts } from "../../components/toast/toasts"
+import { Department, Project, User, UserRole } from "src/types"
 
 interface CreateUserProps {
   departments: Department[]

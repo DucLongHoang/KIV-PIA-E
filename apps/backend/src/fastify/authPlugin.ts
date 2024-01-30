@@ -2,7 +2,7 @@ import { FastifyBaseLogger, FastifyError, FastifyPluginAsync, FastifyReply, Fast
 import fp from "fastify-plugin"
 import { fastifyCookie, FastifyCookieOptions } from "@fastify/cookie"
 import { fastifyJwt } from "@fastify/jwt"
-import { UserRole } from "../../../shared"
+import { UserRole } from "../types/users"
 
 export type FnContext = { logger?: FastifyBaseLogger }
 

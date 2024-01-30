@@ -3,8 +3,8 @@ import { FastifyReply } from "fastify"
 import { AuthDecoratorOptions, Tokens } from "../fastify/authPlugin"
 import { CookieSerializeOptions } from "@fastify/cookie"
 import { addDays, addMinutes } from "date-fns"
-import { UserRole } from "../../../shared"
 import env from "./env"
+import { UserRole } from "../types"
 
 const cookiePrefix = "KIV-PIA-E"
 const accessTokenName = `${cookiePrefix}_Auth-Access-Token`

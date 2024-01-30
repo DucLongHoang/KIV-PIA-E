@@ -16,7 +16,8 @@
     "link:shared": "cd ./apps/frontend/node_modules && rm -rf shared && ln -s ../../shared/dist shared",
     "db:up": "cd ./apps/backend && docker-compose up -d",
     "db:migrate": "cd ./apps/backend && npm run db:migrate",
-    "db:seed": "cd ./apps/backend && npm run db:seed"
+    "db:seed": "cd ./apps/backend && npm run db:seed",
+    "db:prepare": "cd ./apps/backend && npm run db:migrate && npm run db:seed"
   },
   "author": "",
   "license": "ISC",

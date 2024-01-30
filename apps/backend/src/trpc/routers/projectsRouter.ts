@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { adminProcedure, protectedProcedure, router } from "../createRouter"
-import { Project, projectSchema } from "../../../../shared"
+import { projectSchema } from "../../types"
 
 export const createProjectInput = z.object({
   name: z.string(),

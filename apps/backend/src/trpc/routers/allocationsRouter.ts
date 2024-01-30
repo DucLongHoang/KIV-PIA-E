@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { protectedProcedure, router } from "../createRouter"
-import { allocationSchema, AllocationState } from "../../../../shared"
+import { AllocationState, allocationSchema } from "../../types"
 
 export const partialAllocationUpdateSchema = z.object({
   scope: z.string().optional(),

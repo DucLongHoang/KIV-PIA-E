@@ -1,6 +1,5 @@
 import { z } from "zod"
 import { protectedProcedure, router } from "../createRouter"
-import { get } from "http"
 
 export const departmentsRouter = router({
   getAll: protectedProcedure.query(async ({ ctx }) => {

@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom"
 import { trpc } from "../../utils/trpc"
 import { Loading } from "../../pages/Loading"
 import { LINKS } from "../../constants/Links"
-import { UserRole } from "shared"
 import { toasts } from "../toast/toasts"
+import { UserRole } from "src/types"
 
 export const AdminRoute = ({ children }: PropsWithChildren) => {
   const myselfQuery = trpc.users.myself.useQuery()

@@ -1,4 +1,4 @@
-import { AllocationState, UserRole } from "shared"
+import { AllocationState, UserRole } from "src/types"
 import z from "zod"
 
 export const useCreateUserFormSchema = () => {
