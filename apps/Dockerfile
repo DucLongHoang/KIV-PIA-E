@@ -15,6 +15,8 @@ RUN npm install --prefix backend
 # Bundle backend source
 COPY backend/ ./backend/
 
+RUN npm rebuild argon2 --prefix backend
+
 # Build the backend
 RUN npm run build --prefix backend
 
@@ -30,14 +32,10 @@ RUN npm run build --prefix frontend
 
 # Copy the entrypoint script into the image
 COPY backend/entrypoint.sh /app/backend/entrypoint.sh
+RUN chmod +x /app/backend/entrypoint.sh
 
 # Set the script as the entrypoint
 ENTRYPOINT ["/app/backend/entrypoint.sh"]
-
-# Set environment variables
-ENV BACKEND_PORT=5000
-ENV FRONTEND_PORT=3000
-ENV NODE_ENV=production
 
 # Expose the ports for backend and frontend
 EXPOSE $BACKEND_PORT
